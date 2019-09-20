@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apollo-boost": "^0.4.4",
+    "apollo-client": "^2.6.4",
     "eslint-config-react-app": "^5.0.1",
     "react": "^16.9.0",
     "react-app": "^1.1.2",
