@@ -103,17 +103,16 @@ export default class Homepage extends Component {
     }
 
     submitSearch() {
+        const paramfrom = this.state.language_type;
         let param = 'project_id';
-        if (this.state.language_type.includes('all')) {
-            param = "en" +" " +"es" + " " +"ko"
-        } else if (this.state.language_type.includes('en')) {
-            param = "en"
-        } else if (this.state.language_type.includes('es')) {
-            param = "es"
-        } else if (this.state.language_type.includes('ko')) {
-            param = "ko"
+        if (paramfrom.includes('all')) {
+            param = "en" + " " + "es" + " " + "ko"
+        } else if (paramfrom.length > 1) {
+            param = "";
+            for (let i = 0; i < paramfrom.length; i++) {
+                param = param + " " + paramfrom[i]
+            }
         }
-        console.log(param);
         const client = new ApolloClient({
             uri: 'http://localhost:4000/graphql',
             headers: {
@@ -124,7 +123,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: 1, pageSize:100, projectId:${this.state.project_select})
+                            language(page: 1, pageSize:25, projectId:${this.state.project_select})
                             {
                                 ${param}
                                 
@@ -136,6 +135,7 @@ export default class Homepage extends Component {
     }
 
     render() {
+        console.log(this.state.result_message && this.state.result_message[0].en);
         return (
             this.state.error !== null
                 ?
@@ -189,13 +189,21 @@ export default class Homepage extends Component {
                             ?
                             <div className='languagenodata'>no data</div>
                             :
-                            this.state.result_message.map(item =>
-                                <div className='contenttext'>
-                                    <span> {item.en} </span>
-                                    <span> {item.es} </span>
-                                    <span> {item.ko} </span>
-                                </div>
-                            )
+                            <div className="contenttext">
+                                <table>
+                                    {this.state.result_message && this.state.result_message[0].en || null !== null?<th>en</th>:null}
+                                    {this.state.result_message && this.state.result_message[0].es || null !== null?<th>es</th>:null}
+                                    {this.state.result_message && this.state.result_message[0].ko || null !== null?<th>ko</th>:null}
+                                    {
+                                        this.state.result_message.map(item =>
+                                            <tr>
+                                                <td> {item.en} </td>
+                                                <td> {item.es} </td>
+                                                <td> {item.ko} </td>
+                                            </tr>
+                                        )}
+                                </table>
+                            </div>
                         }
                     </div>
                 </div>

@@ -8,9 +8,9 @@ body {
     align-content: center;
     text-align: center;
     background-color: rgba(56, 87, 90, 0.38);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
     outline: none;
 }
