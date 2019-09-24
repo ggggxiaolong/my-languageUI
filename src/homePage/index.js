@@ -36,6 +36,7 @@ export default class Homepage extends Component {
             result_message: null,
             page: 1,
             languageinclude: null,
+            ifMore: true,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -145,12 +146,11 @@ export default class Homepage extends Component {
                             }
                         }`
         })
-            .then(reponse => this.setState({result_message: reponse.data.language}))
+            .then(reponse => this.setState({result_message: [reponse.data.language]}))
             .catch(error => this.setState({error: error.message}))
     }
 
     LetMore() {
-        this.setState({page: this.state.page + 1});
         const paramfrom = this.state.language_type;
         let param = 'project_id';
         if (paramfrom.includes('all')) {
@@ -173,7 +173,6 @@ export default class Homepage extends Component {
                 gql`{
                             language(page: ${this.state.page + 1}, pageSize:25, projectId:${this.state.project_select})
                             {
-                                id
                                 ${param}
                                 
                             }
@@ -184,12 +183,18 @@ export default class Homepage extends Component {
     }
 
     addresultmessage(reponse) {
+        if (reponse.data.language.length < 25) {
+            this.setState({ifMore: false})
+        }
         let old_result_message = this.state.result_message;
-        console.log({result_message: {...old_result_message, ...reponse.data.language}});
-        // this.setState({result_message: [{old_result_message, reponse.data.language}]})
+        // console.log({result_message: {...old_result_message, [this.state.page]:reponse.data.language}});
+        let newlist = [...old_result_message, reponse.data.language];
+        // newlist.map(item => item.map(item => console.log(item.en)));
+        this.setState({result_message: newlist, page: this.state.page + 1})
     }
 
     render() {
+        console.log(this.state.result_message);
         return (
             this.state.error !== null
                 ?
@@ -240,7 +245,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.state.result_message === null || this.state.result_message.length === 0 || this.state.result_message[0].project_id
+                    {this.state.result_message === null
                         ?
                         <div className='languagenodata'>no data</div>
                         :
@@ -256,18 +261,21 @@ export default class Homepage extends Component {
                                     ?
                                     <th>ko</th> : null}
                                 {
-                                    this.state.result_message.map(item =>
-                                        <tr className='table_tr'>
-                                            {this.state.languageinclude && this.state.languageinclude.includes('en') ?
-                                                <td className='width'> {item.en === null ? 'NULL' : item.en} </td> : null}
-                                            {this.state.languageinclude && this.state.languageinclude.includes('es') ?
-                                                <td className='width'> {item.es === null ? 'NULL' : item.es} </td> : null}
-                                            {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
-                                                <td className='width'> {item.ko === null ? 'NULL' : item.ko} </td> : null}
-                                        </tr>
-                                    )}
+                                    this.state.result_message.map((item) =>
+                                        item.map((item_content) =>
+                                            <tr className='table_tr'>
+                                                {this.state.languageinclude && this.state.languageinclude.includes('en') ?
+                                                    <td className='width'> {item_content.en === null ? 'NULL' : item_content.en} </td> : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('es') ?
+                                                    <td className='width'> {item_content.es === null ? 'NULL' : item_content.es} </td> : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
+                                                    <td className='width'> {item_content.ko === null ? 'NULL' : item_content.ko} </td> : null}
+                                            </tr>
+                                        ))}
                             </table>
-                            <button className='letmore' onClick={this.LetMore}>Let More...</button>
+                            {
+                                <button className='letmore' onClick={this.LetMore}>Let More...</button>
+                            }
                         </div>
                     }
                 </div>

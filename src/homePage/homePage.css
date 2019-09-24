@@ -116,6 +116,7 @@ td.width{
     position: relative;
     z-index: 1;
     width: 20%;
+    border-left: 1px dotted rgba(75, 75, 75, 0.1);
 }
 .letmore{
     position: relative;
