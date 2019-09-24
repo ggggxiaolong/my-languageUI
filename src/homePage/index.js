@@ -34,6 +34,8 @@ export default class Homepage extends Component {
             iflogin_forward: false,
             language_type: [''],
             result_message: null,
+            page: 1,
+            languageinclude: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -41,6 +43,8 @@ export default class Homepage extends Component {
         this.setloginforward = this.setloginforward.bind(this);
         this.change_language_select = this.change_language_select.bind(this);
         this.submitSearch = this.submitSearch.bind(this);
+        this.LetMore = this.LetMore.bind(this);
+        this.addresultmessage = this.addresultmessage.bind(this);
     }
 
     changejectselect(event) {
@@ -104,6 +108,17 @@ export default class Homepage extends Component {
 
     submitSearch() {
         const paramfrom = this.state.language_type;
+        let languageinclude = [];
+        if (paramfrom.includes('en')) {
+            languageinclude.push('en')
+        }
+        if (paramfrom.includes('es')) {
+            languageinclude.push('es')
+        }
+        if (paramfrom.includes('ko')) {
+            languageinclude.push('ko')
+        }
+        this.setState({languageinclude: languageinclude, page: 1});
         let param = 'project_id';
         if (paramfrom.includes('all')) {
             param = "en" + " " + "es" + " " + "ko"
@@ -134,8 +149,47 @@ export default class Homepage extends Component {
             .catch(error => this.setState({error: error.message}))
     }
 
+    LetMore() {
+        this.setState({page: this.state.page + 1});
+        const paramfrom = this.state.language_type;
+        let param = 'project_id';
+        if (paramfrom.includes('all')) {
+            param = "en" + " " + "es" + " " + "ko"
+        } else if (paramfrom.length > 1) {
+            param = "";
+            for (let i = 0; i < paramfrom.length; i++) {
+                param = param + " " + paramfrom[i]
+            }
+        }
+        const client = new ApolloClient({
+            uri: 'http://localhost:4000/graphql',
+            headers: {
+                token: cookie.load('tokenaccessToken'),
+                refreshToken: cookie.load('refreshToken'),
+            },
+        });
+        client.query({
+            query:
+                gql`{
+                            language(page: ${this.state.page + 1}, pageSize:25, projectId:${this.state.project_select})
+                            {
+                                id
+                                ${param}
+                                
+                            }
+                        }`
+        })
+            .then(reponse => this.addresultmessage(reponse))
+            .catch(error => this.setState({error: error.message}))
+    }
+
+    addresultmessage(reponse) {
+        let old_result_message = this.state.result_message;
+        console.log({result_message: {...old_result_message, ...reponse.data.language}});
+        // this.setState({result_message: [{old_result_message, reponse.data.language}]})
+    }
+
     render() {
-        console.log(this.state.result_message && this.state.result_message[0].en);
         return (
             this.state.error !== null
                 ?
@@ -185,27 +239,37 @@ export default class Homepage extends Component {
                                 <button onClick={() => this.submitSearch()}>Search</button>
                             </div>
                         </div>
-                        {this.state.result_message === null || this.state.result_message.length === 0 || this.state.result_message[0].project_id
-                            ?
-                            <div className='languagenodata'>no data</div>
-                            :
-                            <div className="contenttext">
-                                <table>
-                                    {this.state.result_message && this.state.result_message[0].en || null !== null?<th>en</th>:null}
-                                    {this.state.result_message && this.state.result_message[0].es || null !== null?<th>es</th>:null}
-                                    {this.state.result_message && this.state.result_message[0].ko || null !== null?<th>ko</th>:null}
-                                    {
-                                        this.state.result_message.map(item =>
-                                            <tr>
-                                                <td> {item.en} </td>
-                                                <td> {item.es} </td>
-                                                <td> {item.ko} </td>
-                                            </tr>
-                                        )}
-                                </table>
-                            </div>
-                        }
                     </div>
+                    {this.state.result_message === null || this.state.result_message.length === 0 || this.state.result_message[0].project_id
+                        ?
+                        <div className='languagenodata'>no data</div>
+                        :
+                        <div className="contenttext">
+                            <table className='contenttexttable'>
+                                {this.state.languageinclude && this.state.languageinclude.includes('en')
+                                    ?
+                                    <th>en</th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('es')
+                                    ?
+                                    <th>es</th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('ko')
+                                    ?
+                                    <th>ko</th> : null}
+                                {
+                                    this.state.result_message.map(item =>
+                                        <tr className='table_tr'>
+                                            {this.state.languageinclude && this.state.languageinclude.includes('en') ?
+                                                <td className='width'> {item.en === null ? 'NULL' : item.en} </td> : null}
+                                            {this.state.languageinclude && this.state.languageinclude.includes('es') ?
+                                                <td className='width'> {item.es === null ? 'NULL' : item.es} </td> : null}
+                                            {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
+                                                <td className='width'> {item.ko === null ? 'NULL' : item.ko} </td> : null}
+                                        </tr>
+                                    )}
+                            </table>
+                            <button className='letmore' onClick={this.LetMore}>Let More...</button>
+                        </div>
+                    }
                 </div>
         )
     }
