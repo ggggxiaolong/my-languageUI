@@ -88,3 +88,15 @@
     left: 5%;
     /*padding-left: 50px;*/
 }
+.languagenodata{
+    position: absolute;
+    z-index: 0;
+    top: 40%;
+    left: 47.5%;
+    color: rgba(49, 35, 23, 0.33);
+    font-size: 30px;
+}
+.contenttext{
+    position: relative;
+    top: 5%;
+}

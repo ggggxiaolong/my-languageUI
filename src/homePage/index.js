@@ -6,6 +6,7 @@ import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
 import {array} from "prop-types";
 
+
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] === val) {
@@ -27,16 +28,19 @@ export default class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project_select: '',
+            project_select: null,
             result: null,
             error: null,
             iflogin_forward: false,
-            language_type: [],
+            language_type: [''],
+            result_message: null,
+            // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
         this.changejectselect = this.changejectselect.bind(this);
         this.setloginforward = this.setloginforward.bind(this);
         this.change_language_select = this.change_language_select.bind(this);
+        this.submitSearch = this.submitSearch.bind(this);
     }
 
     changejectselect(event) {
@@ -44,24 +48,39 @@ export default class Homepage extends Component {
     }
 
     change_language_select(event) {
-        console.log(event.target.value,this.state.language_type);
         let array = this.state.language_type;
-        if (findlanguage(this.state.language_type, event.target.value)) {
-            this.setState({language_type: removeByValue(this.state.language_type, event.target.value)})
+        if (findlanguage(array, event.target.value)) {
+            if (event.target.value === 'all') {
+                this.setState({language_type: ['']})
+            } else {
+                if (array.includes('all')) {
+                    removeByValue(array, 'all')
+                }
+                removeByValue(array, event.target.value);
+                this.setState({language_type: array})
+            }
+
         } else {
-            array.push(event.target.value)
+            if (event.target.value === 'all') {
+                array.push('en');
+                array.push('es');
+                array.push('ko')
+            }
+            array.push(event.target.value);
+            if (array.length === 4) {
+                array.push('all')
+            }
             this.setState({language_type: array});
         }
     }
 
     projectselect() {
-        let token = {
-            token: cookie.load('tokenaccessToken'),
-            refreshToken: cookie.load('refreshToken'),
-        };
         const client = new ApolloClient({
             uri: 'http://localhost:4000/graphql',
-            headers: token,
+            headers: {
+                token: cookie.load('tokenaccessToken'),
+                refreshToken: cookie.load('refreshToken'),
+            },
         });
         client.query({
             query: gql`{
@@ -81,6 +100,39 @@ export default class Homepage extends Component {
 
     componentDidMount() {
         this.projectselect()
+    }
+
+    submitSearch() {
+        let param = 'project_id';
+        if (this.state.language_type.includes('all')) {
+            param = "en" +" " +"es" + " " +"ko"
+        } else if (this.state.language_type.includes('en')) {
+            param = "en"
+        } else if (this.state.language_type.includes('es')) {
+            param = "es"
+        } else if (this.state.language_type.includes('ko')) {
+            param = "ko"
+        }
+        console.log(param);
+        const client = new ApolloClient({
+            uri: 'http://localhost:4000/graphql',
+            headers: {
+                token: cookie.load('tokenaccessToken'),
+                refreshToken: cookie.load('refreshToken'),
+            },
+        });
+        client.query({
+            query:
+                gql`{
+                            language(page: 1, pageSize:100, projectId:${this.state.project_select})
+                            {
+                                ${param}
+                                
+                            }
+                        }`
+        })
+            .then(reponse => this.setState({result_message: reponse.data.language}))
+            .catch(error => this.setState({error: error.message}))
     }
 
     render() {
@@ -113,28 +165,38 @@ export default class Homepage extends Component {
                             <div className='languageUI'>
                                 <div className='selectone'><label>language:</label></div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_all' value='all'
-                                                                  onChange={e => this.change_language_select(e)}/><label>All</label>
-                                </div>
+                                                                  onChange={e => this.change_language_select(e)}
+                                                                  checked={this.state.language_type.length === 4 || this.state.language_type.includes('all') ? 'checked' : null}
+                                /><label>All</label></div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_en' value='en'
-                                                                  checked={findlanguage(this.state.language_type, 'en') ? 'checked' : null}
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en') ? 'checked' : null}
                                                                   onChange={e => this.change_language_select(e)}/><label>en</label>
                                 </div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_es' value='es'
-                                                                  checked={findlanguage(this.state.language_type, 'es') ? 'checked' : null}
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('es') ? 'checked' : null}
                                                                   onChange={e => this.change_language_select(e)}/><label>es</label>
                                 </div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_ko' value='ko'
-                                                                  checked={findlanguage(this.state.language_type, 'ko') ? 'checked' : null}
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko') ? 'checked' : null}
                                                                   onChange={e => this.change_language_select(e)}/><label>ko</label>
                                 </div>
                             </div>
                             <div className='searchclick'>
-                                <button onClick={() => {
-                                }}>Search
-                                </button>
+                                <button onClick={() => this.submitSearch()}>Search</button>
                             </div>
                         </div>
-
+                        {this.state.result_message === null || this.state.result_message.length === 0 || this.state.result_message[0].project_id
+                            ?
+                            <div className='languagenodata'>no data</div>
+                            :
+                            this.state.result_message.map(item =>
+                                <div className='contenttext'>
+                                    <span> {item.en} </span>
+                                    <span> {item.es} </span>
+                                    <span> {item.ko} </span>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
         )
