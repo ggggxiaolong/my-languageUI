@@ -220,6 +220,15 @@ export default class Homepage extends Component {
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
+                    <div className='homepagetitle'>
+                        <div className='Logo'><span>LOGO</span></div>
+                        <div className='personal'>
+                            <div className='personalimage'><img src={require('./images/admin.png')}/></div>
+                            <div className='username'> Admin</div>
+                            <div className='shuxian'/>
+                            <div className='loginquit'><span>退出</span></div>
+                        </div>
+                    </div>
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
