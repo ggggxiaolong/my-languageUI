@@ -266,13 +266,13 @@ export default class Homepage extends Component {
                             <table className='contenttexttable'>
                                 {this.state.languageinclude && this.state.languageinclude.includes('en')
                                     ?
-                                    <th>en</th> : null}
+                                    <th className='thstyle'><h1>en</h1></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('es')
                                     ?
-                                    <th>es</th> : null}
+                                    <th className='thstyle'><h1>es</h1></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('ko')
                                     ?
-                                    <th>ko</th> : null}
+                                    <th className='thstyle'><h1>ko</h1></th> : null}
                                 {
                                     this.state.result_message.map((item) =>
                                         item.map((item_content) =>

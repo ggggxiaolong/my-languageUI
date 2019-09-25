@@ -7,12 +7,12 @@
 }
 
 .homepageUI {
-    background-color: rgba(255, 187, 136, 0.24);
+    background-color: white;
     height: 5%;
     position: relative;
     z-index: 1;
     margin: auto;
-    margin-top: 3%;
+    top: 6%;
 }
 
 .object_location {
@@ -127,6 +127,7 @@
     position: relative;
     z-index: 1;
     width: 100%;
+    top: 6%;
 }
 
 .contenttexttable {
@@ -162,4 +163,10 @@ td.width {
     position: relative;
     z-index: 1;
     height: 70px;
+}
+.thstyle{
+    background-color: rgba(0, 0, 0, 0.63);
+    border-left: 6px double rgb(245, 245, 255);
+    border-right: 6px double rgb(245, 245, 255);
+    line-height: 10%;
 }
