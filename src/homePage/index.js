@@ -37,7 +37,8 @@ export default class Homepage extends Component {
             languageinclude: null,
             ifMore: true,
             radioselect: [false, false, false],
-            ifquit: false
+            ifquit: false,
+            quitsure: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -58,8 +59,12 @@ export default class Homepage extends Component {
     quit(iftrue) {
         if (iftrue === true) {
             this.setState({ifquit: true})
-        } else {
+        } else if (iftrue === false) {
             this.setState({ifquit: false})
+        } else {
+            cookie.remove('tokenaccessToken');
+            cookie.remove('refreshToken');
+            this.setState({quitsure: iftrue})
         }
     }
 
@@ -221,10 +226,10 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <div className='loginouttime'>
-                            <span className='outtimetitle'><b>过期提醒</b></span>
-                            <div className='outtimecontext'>登陆已过期，请重新登陆</div>
-                            <button className='outtimeclick' onClick={this.setloginforward}>确定
+                        <div className='questionquit'>
+                            <span className='questionquit_title'><b>过期提醒</b></span>
+                            <div className='quittext'>登陆已过期，请重新登陆</div>
+                            <button className='button_yes' onClick={this.setloginforward}>确定
                             </button>
                         </div>
                         : <Router><Redirect to="/login"/></Router>
@@ -241,10 +246,18 @@ export default class Homepage extends Component {
                         </div>
                     </div>
                     {this.state.ifquit ?
-                        <div className='questionquit'>
-                            <div className='questionquit_title'><b>Log out</b></div>
-                            <div className='quittext'>Are you sure you want to log out ?</div>
-                        </div> : null}
+                        this.state.quitsure === 'sure'
+                            ?
+                            <Router><Redirect to="/login"/></Router>
+                            :
+                            <div className='questionquit'>
+                                <div className='questionquit_title'><b>Log out</b></div>
+                                <div className='quittext'>Are you sure you want to log out ?</div>
+                                <div className='quitbutton'>
+                                    <button className='button_yes' onClick={() => this.quit('sure')}>Yes</button>
+                                    <button className='button_no' onClick={() => this.quit(false)}>No</button>
+                                </div>
+                            </div> : null}
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
