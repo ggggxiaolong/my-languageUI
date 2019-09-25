@@ -5,7 +5,8 @@
     height: 100%;
     background-color: rgba(56, 54, 94, 0);
 }
-.homepagetitle{
+
+.homepagetitle {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -15,7 +16,7 @@
 
 .homepageUI {
     background-color: white;
-    height: 5%;
+    height: 7%;
     position: relative;
     z-index: 1;
     margin: auto;
@@ -23,12 +24,12 @@
 
 .object_location {
     width: 95%;
-    height: 3%;
+    height: 50%;
     background-color: rgba(94, 94, 94, 0);
     position: relative;
     z-index: 1;
     left: 1%;
-    top: 2%;
+    top: 25%;
 }
 
 .formselect {
@@ -156,6 +157,7 @@ td.width {
     z-index: 1;
     width: 19%;
     border-left: 1px dotted rgba(75, 75, 75, 0.1);
+    word-break: break-all;
 }
 
 .letmore {
@@ -170,20 +172,23 @@ td.width {
     z-index: 1;
     height: 70px;
 }
-.thstyle{
+
+.thstyle {
     background-color: rgba(0, 0, 0, 0.63);
     border-left: 6px double rgb(245, 245, 255);
     border-right: 6px double rgb(245, 245, 255);
     line-height: 10%;
 }
-.Logo{
+
+.Logo {
     position: absolute;
     width: 10%;
     height: 10%;
     left: 0;
     top: 30%;
 }
-.personal{
+
+.personal {
     position: absolute;
     z-index: 1;
     width: 20%;
@@ -194,24 +199,28 @@ td.width {
     color: white;
     font-size: 20px;
 }
-.personalimage{
+
+.personalimage {
     /*float: left;*/
     position: absolute;
     width: 40px;
     height: 40px;
     left: 1%;
 }
-img{
+
+img {
     width: 100%;
     height: 100%;
 }
-.username{
+
+.username {
     position: absolute;
     /*float: left;*/
     left: 15%;
     top: 15%;
 }
-.shuxian{
+
+.shuxian {
     position: relative;
     left: 35%;
     top: 15%;
@@ -222,9 +231,44 @@ img{
     border-radius: 100px;
     border: 1px solid white;
 }
-.loginquit{
+
+.loginquit {
     position: absolute;
     top: 23%;
     left: 40%;
     font-size: 18px;
+}
+
+.quitcontent:hover {
+    cursor: pointer;
+}
+
+.questionquit {
+    position: absolute;
+    z-index: 2;
+    width: 30%;
+    height: 30%;
+    top: 30%;
+    left: 35%;
+    border-radius: 10px;
+    background-color: rgb(183, 183, 183);
+}
+
+.questionquit_title {
+    position: relative;
+    width: 100%;
+    height: 15%;
+    padding-top: 2%;
+    border-radius: 10px 10px 0 0;
+    background-color: rgba(92, 119, 255, 0.48);
+    font-size: 20px;
+}
+
+.quittext {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 10%;
+    top: 20%;
+    font-size: 25px;
 }

@@ -36,7 +36,8 @@ export default class Homepage extends Component {
             page: 0,
             languageinclude: null,
             ifMore: true,
-            radioselect: [false, false, false]
+            radioselect: [false, false, false],
+            ifquit: false
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -47,10 +48,19 @@ export default class Homepage extends Component {
         this.LetMore = this.LetMore.bind(this);
         this.addresultmessage = this.addresultmessage.bind(this);
         this.setradio = this.setradio.bind(this);
+        this.quit = this.quit.bind(this);
     }
 
     changejectselect(event) {
         this.setState({project_select: event.target.value});
+    }
+
+    quit(iftrue) {
+        if (iftrue === true) {
+            this.setState({ifquit: true})
+        } else {
+            this.setState({ifquit: false})
+        }
     }
 
     change_language_select(event) {
@@ -203,7 +213,7 @@ export default class Homepage extends Component {
     }
 
     render() {
-        console.log(this.state.result_message && this.state.result_message[0][0].project_id);
+        // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
             this.state.error !== null
                 ?
@@ -221,14 +231,20 @@ export default class Homepage extends Component {
                     : alert(this.state.error)
                 : <div className='homepage'>
                     <div className='homepagetitle'>
-                        <div className='Logo'><span>LOGO</span></div>
+                        <div className='Logo'><span>TappLock</span></div>
                         <div className='personal'>
                             <div className='personalimage'><img src={require('./images/admin.png')}/></div>
                             <div className='username'> Admin</div>
                             <div className='shuxian'/>
-                            <div className='loginquit'><span>退出</span></div>
+                            <div className='loginquit'><span onClick={() => this.quit(true)}
+                                                             className='quitcontent'>退出</span></div>
                         </div>
                     </div>
+                    {this.state.ifquit ?
+                        <div className='questionquit'>
+                            <div className='questionquit_title'><b>Log out</b></div>
+                            <div className='quittext'>Are you sure you want to log out ?</div>
+                        </div> : null}
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
@@ -267,7 +283,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.state.result_message === null || this.state.result_message[0].length === 0 || this.state.result_message[0][0].project_id
+                    {this.state.result_message === null || this.state.result_message[0].length === 0 || (this.state.result_message[0][0] && this.state.result_message[0][0].project_id) || false
                         ?
                         <div className='languagenodata'>no data</div>
                         :
@@ -287,11 +303,17 @@ export default class Homepage extends Component {
                                         item.map((item_content) =>
                                             <tr className='table_tr'>
                                                 {this.state.languageinclude && this.state.languageinclude.includes('en') ?
-                                                    <td className='width'> {item_content.en === null ? 'NULL' : item_content.en} </td> : null}
+                                                    <td className='width'>
+                                                        <p>{item_content.en === null ? 'NULL' : item_content.en}</p>
+                                                    </td> : null}
                                                 {this.state.languageinclude && this.state.languageinclude.includes('es') ?
-                                                    <td className='width'> {item_content.es === null ? 'NULL' : item_content.es} </td> : null}
+                                                    <td className='width'>
+                                                        <p> {item_content.es === null ? 'NULL' : item_content.es}</p>
+                                                    </td> : null}
                                                 {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
-                                                    <td className='width'> {item_content.ko === null ? 'NULL' : item_content.ko} </td> : null}
+                                                    <td className='width'>
+                                                        <p> {item_content.ko === null ? 'NULL' : item_content.ko}</p>
+                                                    </td> : null}
                                             </tr>
                                         ))}
                             </table>
