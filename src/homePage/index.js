@@ -4,7 +4,6 @@ import {HashRouter as Router, Redirect} from 'react-router-dom'
 import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
-import {array} from "prop-types";
 
 
 function removeByValue(arr, val) {
@@ -34,9 +33,10 @@ export default class Homepage extends Component {
             iflogin_forward: false,
             language_type: [''],
             result_message: null,
-            page: 1,
+            page: 0,
             languageinclude: null,
             ifMore: true,
+            radioselect: [false, false, false]
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -46,6 +46,7 @@ export default class Homepage extends Component {
         this.submitSearch = this.submitSearch.bind(this);
         this.LetMore = this.LetMore.bind(this);
         this.addresultmessage = this.addresultmessage.bind(this);
+        this.setradio = this.setradio.bind(this);
     }
 
     changejectselect(event) {
@@ -139,14 +140,14 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: 1, pageSize:25, projectId:${this.state.project_select})
+                            language(page: 0, pageSize:25, projectId:${this.state.project_select})
                             {
                                 ${param}
                                 
                             }
                         }`
         })
-            .then(reponse => this.setState({result_message: [reponse.data.language]}))
+            .then(reponse => this.setState({result_message: [reponse.data.language], ifMore: true}))
             .catch(error => this.setState({error: error.message}))
     }
 
@@ -171,7 +172,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: ${this.state.page + 1}, pageSize:25, projectId:${this.state.project_select})
+                            language(page: ${this.state.page}, pageSize:25, projectId:${this.state.project_select})
                             {
                                 ${param}
                                 
@@ -193,8 +194,16 @@ export default class Homepage extends Component {
         this.setState({result_message: newlist, page: this.state.page + 1})
     }
 
+    setradio(radioselect) {
+        console.log(radioselect);
+        let radios = [false, false, false];
+        radios[radioselect] = true;
+        console.log(radios);
+        this.setState({radioselect: radios, project_select: radioselect + 1})
+    }
+
     render() {
-        console.log(this.state.result_message);
+        console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
             this.state.error !== null
                 ?
@@ -216,8 +225,12 @@ export default class Homepage extends Component {
                             {this.state.result ?
                                 this.state.result.map(item =>
                                     <div className='selectone' key={item.id}>
+                                        <div className='selectoneTop' onClick={() => this.setradio(item.id - 1)}>
+                                            <div className='radiocircle'/>
+                                        </div>
                                         <input type='radio' name='object'
                                                value={item.id}
+                                               checked={this.state.radioselect[item.id - 1] ? 'checked' : null}
                                                onChange={e => this.changejectselect(e)}/><label>{item.name}</label>
                                     </div>)
                                 : null}
@@ -245,7 +258,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.state.result_message === null
+                    {this.state.result_message === null || this.state.result_message[0].length === 0 || this.state.result_message[0][0].project_id
                         ?
                         <div className='languagenodata'>no data</div>
                         :
@@ -273,9 +286,14 @@ export default class Homepage extends Component {
                                             </tr>
                                         ))}
                             </table>
-                            {
-                                <button className='letmore' onClick={this.LetMore}>Let More...</button>
-                            }
+                            <div className='letmorebox'>
+                                {this.state.ifMore
+                                    ?
+                                    <button className='letmore' onClick={this.LetMore}>Let More...</button>
+                                    :
+                                    <div className='letmore'><span>没有更多了....</span></div>
+                                }
+                            </div>
                         </div>
                     }
                 </div>
