@@ -172,7 +172,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: 0, pageSize:25, projectId:${this.state.project_select}, search:"${this.state.search}")
+                            language(page: 0, pageSize:25, projectId:${this.state.project_select}, search:${this.state.search})
                             {
                                 ${param}
                                 
@@ -204,7 +204,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: ${this.state.page}, pageSize:25, projectId:${this.state.project_select},search:"${this.state.search}")
+                            language(page: ${this.state.page}, pageSize:25, projectId:${this.state.project_select},search:${this.state.search})
                             {
                                 ${param}
                                 
@@ -237,7 +237,7 @@ export default class Homepage extends Component {
             this.setState({search:null})
         }
         else {
-            this.setState({search:search})
+            this.setState({search:"\""+search+"\""})
         }
     }
     render() {
@@ -320,7 +320,7 @@ export default class Homepage extends Component {
                                 </div>
                             </div>
                             <div>
-                                <input placeholder='Search' ref={input => this.input = input} onChange={() => this.changeSearch(this.input)}/>
+                                <input className='searchinput' placeholder='Search' ref={input => this.input = input} onChange={() => this.changeSearch(this.input)}/>
                             </div>
                             <div className='searchclick'>
                                 <button onClick={() => this.submitSearch()}>Search</button>
