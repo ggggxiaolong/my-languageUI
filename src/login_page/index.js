@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-// import './App.css';
+import './App.css';
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
 import {any} from "prop-types";
@@ -18,30 +18,32 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+
 const useStyles = makeStyles(theme => ({
-            '@global': {
-                body: {
-                    backgroundColor: theme.palette.common.white,
-                },
-            },
-            paper: {
-                marginTop: theme.spacing(8),
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            },
-            avatar: {
-                margin: theme.spacing(1),
-                backgroundColor: theme.palette.secondary.main,
-            },
-            form: {
-                width: '100%', // Fix IE 11 issue.
-                marginTop: theme.spacing(1),
-            },
-            submit: {
-                margin: theme.spacing(3, 0, 2),
-            },
-        }));
+    '@global': {
+        body: {
+            backgroundColor: theme.palette.common.white,
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -80,75 +82,62 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
     }
 }
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            message: 0,
-            result: null,
-            error: null,
-            loginsuccess_statu: false,
-            loginsuccess_time: 2,
-            username: null,
-            password: null,
-        };
-        this.loginsubmit = this.loginsubmit.bind(this);
-        this.changeusername = this.changeusername.bind(this);
-    }
+export default function Login() {
+    const [message, setmessage] = useState(0);
+    const [result, setresult] = useState(null);
+    const [error, seterror] = useState(null);
+    const [loginsuccess_statu, setloginsuccess_statu] = useState(false);
+    const [loginsuccess_time, setloginsuccess_time] = useState(2);
+    const [username, setusername] = useState(null);
+    const [password, setpassword] = useState(null);
+    const classes = useStyles();
 
-    loginsubmit() {
-        this.setState({result: null, error: null});
+    function loginsubmit() {
+        setresult(null);
+        seterror(null);
         const client = new ApolloClient({
             uri: 'http://localhost:4000/graphql',
         });
         client.query({
             query: gql`
             {
-            login(mail:"${this.state.username}", password:"${this.state.password}"){
+            login(mail:"${username}", password:"${password}"){
             accessToken
             refreshToken
             }}
             `
         })
-            .then(result => this.setState({result: result}))
-            .catch(error => this.setState({error: error}))
+            .then(result => setresult(result))
+            .catch(error => seterror(error))
     }
 
-    handleEnterKey = (e) => {
-        if (e.keyCode === 13) {
-            this.loginsubmit()
-        }
-    };
-
-    changeusername(type, event) {
+    function changeusername(type, event) {
         if (type === 'user') {
-            this.setState({username: event.target.value})
+            setusername(event.target.value)
         } else {
-            this.setState({password: event.target.value})
+            setpassword(event.target.value)
         }
     }
 
-    componentDidMount() {
-        document.addEventListener("keypress", this.handleEnterKey)
+    if (result) {
+        setTimeout(() => setloginsuccess_statu(true), 2000);
+        setInterval((timeout) => timeout = setloginsuccess_time(loginsuccess_time > 0 ? loginsuccess_time - 1 : clearInterval(timeout)), 1000)
     }
 
-    componentWillUnmount() {
-        document.removeEventListener("keypress", this.handleEnterKey)
-    }
-
-    render() {
-        if (this.state.result) {
-            setTimeout(() => this.setState({loginsuccess_statu: true}), 2000);
-            setInterval((timeout) => timeout = this.setState({loginsuccess_time: this.state.loginsuccess_time > 0 ? this.state.loginsuccess_time - 1 : clearInterval(timeout)}), 1000)
+    function onKeyup(e) {
+        if (e.keyCode === 13) {
+            loginsubmit()
         }
-        return (
+    }
+
+    return (<div onKeyUp={(e) => onKeyup(e)} className='bigdiv'>
+            <Loginresult loginsuccess={result} loginfail={error}
+                         loginsuccess_statu={loginsuccess_statu}
+                         loginsuccess_time={loginsuccess_time}/>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
-                <Loginresult loginsuccess={this.state.result} loginfail={this.state.error}
-                             loginsuccess_statu={this.state.loginsuccess_statu}
-                             loginsuccess_time={this.state.loginsuccess_time}/>
-                <div className={useStyles.paper}>
-                    <Avatar className={useStyles.avatar}>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -162,7 +151,7 @@ class Login extends Component {
                                label="Username"
                                name="Username"
                                autoFocus
-                               onChange={(event) => this.changeusername('user', event)}
+                               onChange={(event) => changeusername('user', event)}
                                placeholder='Username'/>
                     <TextField variant="outlined"
                                margin="normal"
@@ -172,8 +161,9 @@ class Login extends Component {
                                label="Password"
                                name="Password"
                                autoFocus
-                               onChange={(event) => this.changeusername('pwd', event)}
-                               placeholder='Password'/>
+                               onChange={(event) => changeusername('pwd', event)}
+                               placeholder='Password'
+                    />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
                         label="Remember me"
@@ -182,8 +172,8 @@ class Login extends Component {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={useStyles.submit}
-                            onClick={this.loginsubmit}>Sign In</Button>
+                            className={classes.submit}
+                            onClick={() => loginsubmit()}>Sign In</Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">
@@ -196,11 +186,9 @@ class Login extends Component {
                     <Copyright/>
                 </Box>
             </Container>
-        );
-    }
+        </div>
+    )
 }
-
-export default Login;
 // export function Loginresult({className}) {
 //         return (
 //             <div className={className}>
