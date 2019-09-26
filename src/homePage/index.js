@@ -4,7 +4,7 @@ import {HashRouter as Router, Redirect} from 'react-router-dom'
 import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
-
+import Popup_window from '../Popup window'
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -226,12 +226,7 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <div className='questionquit'>
-                            <span className='questionquit_title'><b>过期提醒</b></span>
-                            <div className='quittext'>登陆已过期，请重新登陆</div>
-                            <button className='button_yes' onClick={this.setloginforward}>确定
-                            </button>
-                        </div>
+                        <Popup_window title='过期提醒' content='登陆已过期，请重新登陆' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
@@ -250,14 +245,8 @@ export default class Homepage extends Component {
                             ?
                             <Router><Redirect to="/login"/></Router>
                             :
-                            <div className='questionquit'>
-                                <div className='questionquit_title'><b>Log out</b></div>
-                                <div className='quittext'>Are you sure you want to log out ?</div>
-                                <div className='quitbutton'>
-                                    <button className='button_yes' onClick={() => this.quit('sure')}>Yes</button>
-                                    <button className='button_no' onClick={() => this.quit(false)}>No</button>
-                                </div>
-                            </div> : null}
+                            <Popup_window title='Log out' content='Are you sure you want to log out ?' fun={this.quit}/>
+                        : null}
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
@@ -335,7 +324,7 @@ export default class Homepage extends Component {
                                     ?
                                     <button className='letmore' onClick={this.LetMore}>Let More...</button>
                                     :
-                                    <div className='letmore'><span>没有更多了....</span></div>
+                                    <div className='letmore'><span>No more message....</span></div>
                                 }
                             </div>
                         </div>

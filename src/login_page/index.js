@@ -61,7 +61,17 @@ class Login extends Component {
             .then(result => this.setState({result: result}))
             .catch(error => this.setState({error: error}))
     }
-
+    handleEnterKey = (e) => {
+    if(e.keyCode === 13){
+         this.loginsubmit()
+    }
+}
+    componentDidMount() {
+        document.addEventListener("keypress",this.handleEnterKey)
+    }
+    componentWillUnmount() {
+        document.removeEventListener("keypress",this.handleEnterKey)
+    }
 
     render() {
         if (this.state.result) {

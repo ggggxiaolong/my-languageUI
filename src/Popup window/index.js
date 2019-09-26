@@ -1,13 +1,14 @@
-import React from 'react-dom'
+import React from 'react'
+import './Popup window.css'
 
 export default function Popup_window({title,content,fun}) {
     return (
         <div className='questionquit'>
-            <div className='questionquit_title'><b>Log out</b></div>
-            <div className='quittext'>Are you sure you want to log out ?</div>
+            <div className='questionquit_title'><b>{title}</b></div>
+            <div className='quittext'>{content}</div>
             <div className='quitbutton'>
-                <button className='button_yes' onClick={() => this.quit('sure')}>Yes</button>
-                <button className='button_no' onClick={() => this.quit(false)}>No</button>
+                <button className='button_yes' onClick={() => fun('sure')}>Yes</button>
+                <button className='button_no' onClick={() =>fun(false)}>No</button>
             </div>
         </div>
     )
