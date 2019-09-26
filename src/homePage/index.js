@@ -39,6 +39,7 @@ export default class Homepage extends Component {
             radioselect: [false, false, false],
             ifquit: false,
             quitsure: null,
+            search:null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -85,10 +86,14 @@ export default class Homepage extends Component {
             if (event.target.value === 'all') {
                 array.push('en');
                 array.push('es');
-                array.push('ko')
+                array.push('ko');
+                array.push('ja');
+                array.push('sk');
+                array.push('cs');
+                array.push('fr');
             }
             array.push(event.target.value);
-            if (array.length === 4) {
+            if (array.length === 8) {
                 array.push('all')
             }
             this.setState({language_type: array});
@@ -135,10 +140,22 @@ export default class Homepage extends Component {
         if (paramfrom.includes('ko')) {
             languageinclude.push('ko')
         }
+        if (paramfrom.includes('ja')) {
+            languageinclude.push('ja')
+        }
+        if (paramfrom.includes('sk')) {
+            languageinclude.push('sk')
+        }
+        if (paramfrom.includes('cs')) {
+            languageinclude.push('cs')
+        }
+        if (paramfrom.includes('fr')) {
+            languageinclude.push('fr')
+        }
         this.setState({languageinclude: languageinclude, page: 1});
         let param = 'project_id';
         if (paramfrom.includes('all')) {
-            param = "en" + " " + "es" + " " + "ko"
+            param = "en" + " " + "es" + " " + "ko" + " " + "ja" + " " + "sk" + " " + "cs" + " " + "fr"
         } else if (paramfrom.length > 1) {
             param = "";
             for (let i = 0; i < paramfrom.length; i++) {
@@ -155,7 +172,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: 0, pageSize:25, projectId:${this.state.project_select})
+                            language(page: 0, pageSize:25, projectId:${this.state.project_select}, search:"${this.state.search}")
                             {
                                 ${param}
                                 
@@ -170,7 +187,7 @@ export default class Homepage extends Component {
         const paramfrom = this.state.language_type;
         let param = 'project_id';
         if (paramfrom.includes('all')) {
-            param = "en" + " " + "es" + " " + "ko"
+            param = "en" + " " + "es" + " " + "ko" + " " + "ja" + " " + "sk" + " " + "cs" + " " + "fr"
         } else if (paramfrom.length > 1) {
             param = "";
             for (let i = 0; i < paramfrom.length; i++) {
@@ -187,7 +204,7 @@ export default class Homepage extends Component {
         client.query({
             query:
                 gql`{
-                            language(page: ${this.state.page}, pageSize:25, projectId:${this.state.project_select})
+                            language(page: ${this.state.page}, pageSize:25, projectId:${this.state.project_select},search:"${this.state.search}")
                             {
                                 ${param}
                                 
@@ -210,13 +227,19 @@ export default class Homepage extends Component {
     }
 
     setradio(radioselect) {
-        console.log(radioselect);
         let radios = [false, false, false];
         radios[radioselect] = true;
-        console.log(radios);
         this.setState({radioselect: radios, project_select: radioselect + 1})
     }
-
+    changeSearch(search){
+        search = search.value;
+        if (search === ''){
+            this.setState({search:null})
+        }
+        else {
+            this.setState({search:search})
+        }
+    }
     render() {
         // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
@@ -265,7 +288,7 @@ export default class Homepage extends Component {
                                 <div className='selectone'><label>language:</label></div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_all' value='all'
                                                                   onChange={e => this.change_language_select(e)}
-                                                                  checked={this.state.language_type.length === 4 || this.state.language_type.includes('all') ? 'checked' : null}
+                                                                  checked={this.state.language_type.length === 8 || this.state.language_type.includes('all') ? 'checked' : null}
                                 /><label>All</label></div>
                                 <div className='selectone'><input type='checkbox' name='lanuage_en' value='en'
                                                                   checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en') ? 'checked' : null}
@@ -279,6 +302,25 @@ export default class Homepage extends Component {
                                                                   checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko') ? 'checked' : null}
                                                                   onChange={e => this.change_language_select(e)}/><label>ko</label>
                                 </div>
+                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='ja'
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ja') ? 'checked' : null}
+                                                                  onChange={e => this.change_language_select(e)}/><label>ja</label>
+                                </div>
+                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='sk'
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('sk') ? 'checked' : null}
+                                                                  onChange={e => this.change_language_select(e)}/><label>sk</label>
+                                </div>
+                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='cs'
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('cs') ? 'checked' : null}
+                                                                  onChange={e => this.change_language_select(e)}/><label>cs</label>
+                                </div>
+                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='fr'
+                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('fr') ? 'checked' : null}
+                                                                  onChange={e => this.change_language_select(e)}/><label>fr</label>
+                                </div>
+                            </div>
+                            <div>
+                                <input placeholder='Search' ref={input => this.input = input} onChange={() => this.changeSearch(this.input)}/>
                             </div>
                             <div className='searchclick'>
                                 <button onClick={() => this.submitSearch()}>Search</button>
@@ -300,6 +342,18 @@ export default class Homepage extends Component {
                                 {this.state.languageinclude && this.state.languageinclude.includes('ko')
                                     ?
                                     <th className='thstyle'><h1>ko</h1></th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('ja')
+                                    ?
+                                    <th className='thstyle'><h1>ja</h1></th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('sk')
+                                    ?
+                                    <th className='thstyle'><h1>sk</h1></th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('cs')
+                                    ?
+                                    <th className='thstyle'><h1>cs</h1></th> : null}
+                                {this.state.languageinclude && this.state.languageinclude.includes('fr')
+                                    ?
+                                    <th className='thstyle'><h1>fr</h1></th> : null}
                                 {
                                     this.state.result_message.map((item) =>
                                         item.map((item_content) =>
@@ -315,6 +369,23 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
                                                     <td className='width'>
                                                         <p> {item_content.ko === null ? 'NULL' : item_content.ko}</p>
+                                                    </td> : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('ja') ?
+                                                    <td className='width'>
+                                                        <p>{item_content.ja === null ? 'NULL' : item_content.ja}</p>
+                                                    </td>
+                                                    : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('sk') ?
+                                                    <td className='width'>
+                                                        <p>{item_content.sk === null ? 'NULL' : item_content.sk}</p>
+                                                    </td> : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('cs') ?
+                                                    <td className='width'>
+                                                        <p>{item_content.cs === null ? 'NULL' : item_content.cs}</p>
+                                                    </td> : null}
+                                                {this.state.languageinclude && this.state.languageinclude.includes('fr') ?
+                                                    <td className='width'>
+                                                        <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
                                                     </td> : null}
                                             </tr>
                                         ))}

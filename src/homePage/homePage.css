@@ -155,7 +155,7 @@
 td.width {
     position: relative;
     z-index: 1;
-    width: 19%;
+    width: 14%;
     border-left: 1px dotted rgba(75, 75, 75, 0.1);
     word-break: break-all;
 }
