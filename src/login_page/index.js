@@ -1,10 +1,59 @@
 import React, {Component, useState} from 'react';
-import './App.css';
+// import './App.css';
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
 import {any} from "prop-types";
-import {HashRouter as Router, Link, Redirect, Route} from 'react-router-dom'
+import {HashRouter as Router, Redirect, Route} from 'react-router-dom'
 import cookie from 'react-cookies'
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+const useStyles = makeStyles(theme => ({
+            '@global': {
+                body: {
+                    backgroundColor: theme.palette.common.white,
+                },
+            },
+            paper: {
+                marginTop: theme.spacing(8),
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+            avatar: {
+                margin: theme.spacing(1),
+                backgroundColor: theme.palette.secondary.main,
+            },
+            form: {
+                width: '100%', // Fix IE 11 issue.
+                marginTop: theme.spacing(1),
+            },
+            submit: {
+                margin: theme.spacing(3, 0, 2),
+            },
+        }));
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <span color="inherit">
+                Now Data
+            </span>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, loginsuccess_time}) {
     if (loginsuccess_statu) {
@@ -32,16 +81,19 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
 }
 
 class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             message: 0,
             result: null,
             error: null,
             loginsuccess_statu: false,
             loginsuccess_time: 2,
+            username: null,
+            password: null,
         };
-        this.loginsubmit = this.loginsubmit.bind(this)
+        this.loginsubmit = this.loginsubmit.bind(this);
+        this.changeusername = this.changeusername.bind(this);
     }
 
     loginsubmit() {
@@ -52,7 +104,7 @@ class Login extends Component {
         client.query({
             query: gql`
             {
-            login(mail:"${this.usernameinput.value}", password:"${this.passwordinput.value}"){
+            login(mail:"${this.state.username}", password:"${this.state.password}"){
             accessToken
             refreshToken
             }}
@@ -61,16 +113,27 @@ class Login extends Component {
             .then(result => this.setState({result: result}))
             .catch(error => this.setState({error: error}))
     }
+
     handleEnterKey = (e) => {
-    if(e.keyCode === 13){
-         this.loginsubmit()
+        if (e.keyCode === 13) {
+            this.loginsubmit()
+        }
+    };
+
+    changeusername(type, event) {
+        if (type === 'user') {
+            this.setState({username: event.target.value})
+        } else {
+            this.setState({password: event.target.value})
+        }
     }
-}
+
     componentDidMount() {
-        document.addEventListener("keypress",this.handleEnterKey)
+        document.addEventListener("keypress", this.handleEnterKey)
     }
+
     componentWillUnmount() {
-        document.removeEventListener("keypress",this.handleEnterKey)
+        document.removeEventListener("keypress", this.handleEnterKey)
     }
 
     render() {
@@ -79,19 +142,60 @@ class Login extends Component {
             setInterval((timeout) => timeout = this.setState({loginsuccess_time: this.state.loginsuccess_time > 0 ? this.state.loginsuccess_time - 1 : clearInterval(timeout)}), 1000)
         }
         return (
-            <div className='loginUi'>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
                 <Loginresult loginsuccess={this.state.result} loginfail={this.state.error}
                              loginsuccess_statu={this.state.loginsuccess_statu}
                              loginsuccess_time={this.state.loginsuccess_time}/>
-                <input type='text' ref={input => this.usernameinput = input} className='usernameinput'
-                       placeholder='Username'/>
-                <br/>
-                <input type='text' ref={input => this.passwordinput = input} className='passwordinput'
-                       placeholder='Password'/>
-                <br/>
-                <button className='loginbutton' onClick={this.loginsubmit}>登录</button>
-                <button className='registered'>注册</button>
-            </div>
+                <div className={useStyles.paper}>
+                    <Avatar className={useStyles.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <TextField variant="outlined"
+                               margin="normal"
+                               required
+                               fullWidth
+                               id="username"
+                               label="Username"
+                               name="Username"
+                               autoFocus
+                               onChange={(event) => this.changeusername('user', event)}
+                               placeholder='Username'/>
+                    <TextField variant="outlined"
+                               margin="normal"
+                               required
+                               fullWidth
+                               id="password"
+                               label="Password"
+                               name="Password"
+                               autoFocus
+                               onChange={(event) => this.changeusername('pwd', event)}
+                               placeholder='Password'/>
+                    <FormControlLabel
+                        control={<Checkbox value="remember" color="primary"/>}
+                        label="Remember me"
+                    />
+                    <Button type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={useStyles.submit}
+                            onClick={this.loginsubmit}>Sign In</Button>
+                    <Grid container>
+                        <Grid item xs>
+                            <Link href="#" variant="body2">
+                                Forgot password?
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </div>
+                <Box mt={8}>
+                    <Copyright/>
+                </Box>
+            </Container>
         );
     }
 }
