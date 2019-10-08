@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
 import {compose, spacing, palette} from '@material-ui/system';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -22,11 +23,17 @@ function removeByValue(arr, val) {
 const MyTextField = styled(TextField)(
     {
         // paddingTop:8,
-        marginTop:-2,
+        marginTop: -2,
         // '& input':{height:'0.1rem'}
     },
-
 );
+const MySelect = styled(TextField)({
+    margin: 0,
+    '& label': {
+        fontSize:'20px'
+    },
+    // '& div': {height: '40px'}
+});
 
 function findlanguage(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -62,7 +69,6 @@ export default class Homepage extends Component {
         this.submitSearch = this.submitSearch.bind(this);
         this.LetMore = this.LetMore.bind(this);
         this.addresultmessage = this.addresultmessage.bind(this);
-        this.setradio = this.setradio.bind(this);
         this.quit = this.quit.bind(this);
     }
 
@@ -239,12 +245,6 @@ export default class Homepage extends Component {
         this.setState({result_message: newlist, page: this.state.page + 1})
     }
 
-    setradio(radioselect) {
-        let radios = [false, false, false];
-        radios[radioselect] = true;
-        this.setState({radioselect: radios, project_select: radioselect + 1})
-    }
-
     changeSearch(search) {
         search = search.target.value;
         if (search === '') {
@@ -287,16 +287,30 @@ export default class Homepage extends Component {
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
-                                this.state.result.map(item =>
-                                    <div className='selectone' key={item.id}>
-                                        <div className='selectoneTop' onClick={() => this.setradio(item.id - 1)}>
-                                            <div className='radiocircle'/>
-                                        </div>
-                                        <input type='radio' name='object'
-                                               value={item.id}
-                                               checked={this.state.radioselect[item.id - 1] ? 'checked' : null}
-                                               onChange={e => this.changejectselect(e)}/><label>{item.name}</label>
-                                    </div>)
+                                <div className='radiolocation'>
+                                    <MySelect
+                                        id="standard-select-currency"
+                                        select
+                                        label="Select"
+                                        // className={classes.textField}
+                                        value={this.state.project_select}
+                                        onChange={this.changejectselect}
+                                        // SelectProps={{
+                                        //     MenuProps: {
+                                        //         className: classes.menu,
+                                        //     },
+                                        // }}
+                                        helperText="Please select your projectId"
+                                        margin="normal"
+                                        variant="outlined"
+                                    >
+                                        {this.state.result.map(option => (
+                                            <MenuItem key={option.id} value={option.id}>
+                                                {option.name}
+                                            </MenuItem>
+                                        ))}
+                                    </MySelect>
+                                </div>
                                 : null}
                             <div className='languageUI'>
                                 <div className='selectone'><label>language:</label></div>

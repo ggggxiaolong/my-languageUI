@@ -16,7 +16,7 @@
 
 .homepageUI {
     background-color: white;
-    height: 7%;
+    height: 10%;
     position: relative;
     z-index: 1;
     margin: auto;
@@ -24,12 +24,12 @@
 
 .object_location {
     width: 95%;
-    height: 50%;
+    height: 100%;
     background-color: rgba(94, 94, 94, 0);
     position: relative;
     z-index: 1;
     left: 1%;
-    top: 25%;
+    top: 5%;
 }
 
 .formselect {
@@ -112,13 +112,13 @@
     position: absolute;
     z-index: 1;
     right: 1%;
-    top: 1%;
+    top: 20%;
 }
 
 .languageUI {
-    position: relative;
+    position: absolute;
     z-index: 1;
-    left: 5%;
+    left: 40%;
 }
 
 .languagenodata {
@@ -307,5 +307,12 @@ img {
     z-index: 1;
     width: 15%;
     right: 8%;
-    top: 0;
+    top: 20%;
+}
+.radiolocation{
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    height: 100%;
+    top: 3%;
 }
