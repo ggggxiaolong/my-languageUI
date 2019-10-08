@@ -168,12 +168,12 @@ export default function Login() {
                         control={<Checkbox value="remember" color="primary"/>}
                         label="Remember me"
                     />
-                    <Button type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={() => loginsubmit()}>Sign In</Button>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={() => loginsubmit()}>Sign In</Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2">

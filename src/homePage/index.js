@@ -5,6 +5,10 @@ import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
 import Popup_window from '../Popup window'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import {styled} from '@material-ui/core/styles';
+import { compose, spacing, palette } from '@material-ui/system';
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -14,6 +18,13 @@ function removeByValue(arr, val) {
         }
     }
 }
+
+const MyTextField = styled(TextField)(
+    compose(
+    spacing,
+    palette,
+  ),
+);
 
 function findlanguage(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -39,7 +50,7 @@ export default class Homepage extends Component {
             radioselect: [false, false, false],
             ifquit: false,
             quitsure: null,
-            search:null,
+            search: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -231,15 +242,16 @@ export default class Homepage extends Component {
         radios[radioselect] = true;
         this.setState({radioselect: radios, project_select: radioselect + 1})
     }
-    changeSearch(search){
-        search = search.value;
-        if (search === ''){
-            this.setState({search:null})
-        }
-        else {
-            this.setState({search:"\""+search+"\""})
+
+    changeSearch(search) {
+        search = search.target.value;
+        if (search === '') {
+            this.setState({search: null})
+        } else {
+            this.setState({search: "\"" + search + "\""})
         }
     }
+
     render() {
         // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
@@ -320,10 +332,24 @@ export default class Homepage extends Component {
                                 </div>
                             </div>
                             <div>
-                                <input className='searchinput' placeholder='Search' ref={input => this.input = input} onChange={() => this.changeSearch(this.input)}/>
+                                <MyTextField
+                                    marginLeft={1}
+                                    marginRight={1}
+                                    id="outlined-search"
+                                    label="Search field"
+                                    type="search"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={(search) => this.changeSearch(search)}
+                                />
                             </div>
                             <div className='searchclick'>
-                                <button onClick={() => this.submitSearch()}>Search</button>
+                                <Button fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => this.submitSearch()}>
+                                    Search
+                                </Button>
                             </div>
                         </div>
                     </div>
