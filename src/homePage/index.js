@@ -8,7 +8,7 @@ import Popup_window from '../Popup window'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
-import { compose, spacing, palette } from '@material-ui/system';
+import {compose, spacing, palette} from '@material-ui/system';
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -20,10 +20,12 @@ function removeByValue(arr, val) {
 }
 
 const MyTextField = styled(TextField)(
-    compose(
-    spacing,
-    palette,
-  ),
+    {
+        // paddingTop:8,
+        marginTop:-2,
+        // '& input':{height:'0.1rem'}
+    },
+
 );
 
 function findlanguage(arr, val) {
@@ -266,7 +268,7 @@ export default class Homepage extends Component {
                     : alert(this.state.error)
                 : <div className='homepage'>
                     <div className='homepagetitle'>
-                        <div className='Logo'><span>TappLock</span></div>
+                        <div className='Logo'><span><b>TappLock</b></span></div>
                         <div className='personal'>
                             <div className='personalimage'><img src={require('./images/admin.png')}/></div>
                             <div className='username'> Admin</div>
@@ -331,14 +333,12 @@ export default class Homepage extends Component {
                                                                   onChange={e => this.change_language_select(e)}/><label>fr</label>
                                 </div>
                             </div>
-                            <div>
+                            <div className='searchinput'>
                                 <MyTextField
-                                    marginLeft={1}
-                                    marginRight={1}
                                     id="outlined-search"
                                     label="Search field"
                                     type="search"
-                                    margin="normal"
+                                    margin="dense"
                                     variant="outlined"
                                     onChange={(search) => this.changeSearch(search)}
                                 />
