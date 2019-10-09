@@ -280,7 +280,6 @@ export default class Homepage extends Component {
     }
 
     render() {
-        // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
             this.state.error !== null
                 ?
@@ -489,7 +488,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     }
-                    {this.state.scrollY > 1000 ? <CometoTop top={this.state.scrollY}/> : null}
+                    {this.state.scrollY > 1000 ? <CometoTop top={this.state.scrollY > 1000 ? this.state.scrollY : null}/> : null}
                 </div>
         )
     }
