@@ -8,7 +8,7 @@ import Popup_window from '../Popup window'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
-import {compose, spacing, palette} from '@material-ui/system';
+// import {compose, spacing, palette} from '@material-ui/system';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import CometoTop from '../CometoTop'
@@ -65,7 +65,7 @@ export default class Homepage extends Component {
             quitsure: null,
             search: null,
             nosearch: false,
-            scrollY: null,
+            scrollY: 0,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -280,7 +280,6 @@ export default class Homepage extends Component {
     }
 
     render() {
-        console.log(this.state.scrollY);
         // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
             this.state.error !== null
@@ -410,28 +409,31 @@ export default class Homepage extends Component {
                         :
                         <div className="contenttext">
                             <table className='contenttexttable'>
-                                {this.state.languageinclude && this.state.languageinclude.includes('en')
-                                    ?
-                                    <th className='thstyle'><h2>en</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('es')
-                                    ?
-                                    <th className='thstyle'><h2>es</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('ko')
-                                    ?
-                                    <th className='thstyle'><h2>ko</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('ja')
-                                    ?
-                                    <th className='thstyle'><h2>ja</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('sk')
-                                    ?
-                                    <th className='thstyle'><h2>sk</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('cs')
-                                    ?
-                                    <th className='thstyle'><h2>cs</h2></th> : null}
-                                {this.state.languageinclude && this.state.languageinclude.includes('fr')
-                                    ?
-                                    <th className='thstyle'><h2>fr</h2></th> : null}
-                                <th className='thstyle'><h2>Editor</h2></th>
+                                <tbody>
+                                <tr>
+                                    {this.state.languageinclude && this.state.languageinclude.includes('en')
+                                        ?
+                                        <th className='thstyle'><h2>en</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('es')
+                                        ?
+                                        <th className='thstyle'><h2>es</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('ko')
+                                        ?
+                                        <th className='thstyle'><h2>ko</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('ja')
+                                        ?
+                                        <th className='thstyle'><h2>ja</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('sk')
+                                        ?
+                                        <th className='thstyle'><h2>sk</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('cs')
+                                        ?
+                                        <th className='thstyle'><h2>cs</h2></th> : null}
+                                    {this.state.languageinclude && this.state.languageinclude.includes('fr')
+                                        ?
+                                        <th className='thstyle'><h2>fr</h2></th> : null}
+                                    <th className='thstyle'><h2>Editor</h2></th>
+                                </tr>
                                 {
                                     this.state.result_message.map((item) =>
                                         item.map((item_content) =>
@@ -471,6 +473,7 @@ export default class Homepage extends Component {
                                                 </td>
                                             </tr>
                                         ))}
+                                </tbody>
                             </table>
                             <div className='letmorebox'>
                                 {this.state.ifMore
@@ -486,7 +489,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     }
-                    <CometoTop top={this.state.scrollY}/>
+                    {<CometoTop top={this.state.scrollY}/>}
                 </div>
         )
     }
