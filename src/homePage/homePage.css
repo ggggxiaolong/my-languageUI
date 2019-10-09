@@ -119,7 +119,7 @@
 .searchclick {
     position: absolute;
     z-index: 1;
-    right: 3%;
+    right: 1%;
     top: 20%;
 }
 
@@ -145,15 +145,17 @@
     position: relative;
     z-index: 1;
     width: 100%;
+    background-color: white;
     /*top: 6%;*/
 }
 
 .contenttexttable {
     position: relative;
     z-index: 1;
-    width: 100%;
+    width: 98%;
     height: 100%;
     border-collapse: collapse;
+    margin: auto;
 }
 
 .table_tr {
@@ -281,7 +283,7 @@ img {
     position: absolute;
     z-index: 1;
     width: 15%;
-    right: 8%;
+    right: 4.3%;
     top: 20%;
 }
 .radiolocation{
