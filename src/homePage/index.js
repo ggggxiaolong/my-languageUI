@@ -62,7 +62,8 @@ export default class Homepage extends Component {
             ifquit: false,
             quitsure: null,
             search: null,
-            nosearch:false,
+            nosearch: false,
+            scrollY: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -74,6 +75,7 @@ export default class Homepage extends Component {
         this.addresultmessage = this.addresultmessage.bind(this);
         this.quit = this.quit.bind(this);
         this.selectedone = this.selectedone.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     changejectselect(event) {
@@ -147,13 +149,18 @@ export default class Homepage extends Component {
         this.setState({iflogin_forward: true})
     }
 
+    handleScroll(event) {
+        this.setState({scrollY: event.target.scrollingElement.scrollTop});
+    }
+
     componentDidMount() {
-        this.projectselect()
+        this.projectselect();
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     submitSearch() {
-        if (this.state.language_type.length === 1 || this.state.project_select === null){
-            this.setState({nosearch:true})
+        if (this.state.language_type.length === 1 || this.state.project_select === null) {
+            this.setState({nosearch: true})
         }
         const paramfrom = this.state.language_type;
         let languageinclude = [];
@@ -251,9 +258,10 @@ export default class Homepage extends Component {
         // newlist.map(item => item.map(item => console.log(item.en)));
         this.setState({result_message: newlist, page: this.state.page + 1})
     }
-    selectedone(selected){
-        if (selected === true){
-            this.setState({nosearch:false})
+
+    selectedone(selected) {
+        if (selected === true) {
+            this.setState({nosearch: false})
         }
     }
 
@@ -267,6 +275,7 @@ export default class Homepage extends Component {
     }
 
     render() {
+        console.log(this.state.scrollY);
         // console.log(this.state.result_message && this.state.result_message[0][0].project_id);
         return (
             this.state.error !== null
@@ -275,18 +284,21 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <Popup_window title='过期提醒' content='登陆已过期，请重新登陆' fun={this.setloginforward}/>
+                        <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login' title='Login timeout'
+                                      content='Login has expired, please login again .' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
                     <div className='homepagetitle'>
-                        <div className='Logo'><span><b>TappLock</b></span></div>
-                        <div className='personal'>
-                            <div className='personalimage'><img src={require('./images/admin.png')}/></div>
-                            <div className='username'> Admin</div>
-                            <div className='shuxian'/>
-                            <div className='loginquit'><span onClick={() => this.quit(true)}
-                                                             className='quitcontent'>退出</span></div>
+                        <div className='homepagetitle_change'>
+                            <div className='Logo'><span><b>TappLock</b></span></div>
+                            <div className='personal'>
+                                <div className='personalimage'><img src={require('./images/admin.png')}/></div>
+                                <div className='username'> Admin</div>
+                                <div className='shuxian'/>
+                                <div className='loginquit'><span onClick={() => this.quit(true)}
+                                                                 className='quitcontent'>退出</span></div>
+                            </div>
                         </div>
                     </div>
                     {this.state.ifquit ?
@@ -295,10 +307,13 @@ export default class Homepage extends Component {
                             <Router><Redirect to="/login"/></Router>
                             :
                             <Popup_window title='Log out' content='Are you sure you want to log out ?' fun={this.quit}/>
-                        :this.state.nosearch
-                        ?
-                            <Popup_window title='Selected' content='Please select project and language' fun={() => {this.selectedone(true)}} surebutton='I konwn'/>
-                        :null}
+                        : this.state.nosearch
+                            ?
+                            <Popup_window oneselect={1} title='Selected' content='Please select project and language .'
+                                          fun={() => {
+                                              this.selectedone(true)
+                                          }} surebutton='I konwn'/>
+                            : null}
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
@@ -411,6 +426,7 @@ export default class Homepage extends Component {
                                 {this.state.languageinclude && this.state.languageinclude.includes('fr')
                                     ?
                                     <th className='thstyle'><h1>fr</h1></th> : null}
+                                <th className='thstyle'><h1>Editor</h1></th>
                                 {
                                     this.state.result_message.map((item) =>
                                         item.map((item_content) =>
@@ -444,7 +460,7 @@ export default class Homepage extends Component {
                                                     <td className='width'>
                                                         <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
                                                     </td> : null}
-                                            </tr>
+                                                <td className='width_edit'><div className='edit'><img src={require('./images/edit.png')}/></div></td>                                       </tr>
                                         ))}
                             </table>
                             <div className='letmorebox'>
@@ -452,7 +468,7 @@ export default class Homepage extends Component {
                                     ?
                                     <Button fullWidth
                                             variant="contained"
-                                            color="secondary"
+                                            color="primary"
                                             onClick={this.LetMore}>
                                         Let More...</Button>
                                     :

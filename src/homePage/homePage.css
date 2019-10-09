@@ -8,10 +8,17 @@
 
 .homepagetitle {
     position: relative;
-    z-index: 1;
+    z-index: 99;
     width: 100%;
     height: 8%;
-    background-color: rgba(92, 119, 255, 0.48);
+    background-color: rgba(92, 119, 255, 0);
+}
+.homepagetitle_change {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    height: 8%;
+    background-color: rgba(92, 119, 255, 0.78);
 }
 
 .homepageUI {
@@ -163,6 +170,13 @@ td.width {
     border-left: 1px dotted rgba(75, 75, 75, 0.1);
     word-break: break-all;
 }
+td.width_edit {
+    position: relative;
+    z-index: 1;
+    width: 2%;
+    border-left: 1px dotted rgba(75, 75, 75, 0.1);
+    word-break: break-all;
+}
 
 .letmore {
     position: relative;
@@ -194,15 +208,15 @@ td.width {
     left: 0;
     top: 25%;
     font-size: 25px;
-    color: rgba(119, 51, 15, 0.78);
+    color: white;
 }
 
 .personal {
     position: absolute;
     z-index: 1;
-    width: 20%;
+    width: 15%;
     height: 55%;
-    right: 0;
+    right: 3%;
     background-color: rgba(82, 93, 118, 0);
     top: 20%;
     color: white;
@@ -214,7 +228,7 @@ td.width {
     position: absolute;
     width: 40px;
     height: 40px;
-    left: 1%;
+    left: 36%;
 }
 
 img {
@@ -225,13 +239,13 @@ img {
 .username {
     position: absolute;
     /*float: left;*/
-    left: 15%;
+    left: 54%;
     top: 15%;
 }
 
 .shuxian {
     position: relative;
-    left: 35%;
+    left: 81%;
     top: 15%;
     /*float: left;*/
     /*padding-left: 20px;*/
@@ -244,52 +258,12 @@ img {
 .loginquit {
     position: absolute;
     top: 23%;
-    left: 40%;
+    right: 0;
     font-size: 18px;
 }
 
 .quitcontent:hover {
     cursor: pointer;
-}
-
-.questionquit {
-    position: absolute;
-    z-index: 2;
-    width: 30%;
-    height: 30%;
-    top: 30%;
-    left: 35%;
-    border-radius: 10px;
-    background-color: rgb(183, 183, 183);
-    outline: none;
-}
-
-.questionquit_title {
-    position: relative;
-    width: 100%;
-    height: 15%;
-    padding-top: 2%;
-    border-radius: 10px 10px 0 0;
-    background-color: rgba(92, 119, 255, 0.48);
-    font-size: 20px;
-}
-
-.quittext {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 10%;
-    top: 20%;
-    font-size: 25px;
-}
-
-.quitbutton {
-    position: relative;
-    z-index: 2;
-    top: 40%;
-    left: 20%;
-    width: 60%;
-    height: 15%;
 }
 
 .button_yes {
@@ -301,14 +275,6 @@ img {
     outline: none;
 }
 
-.button_no {
-    background-color: rgba(92, 119, 255, 0.48);
-    border-radius: 10px;
-    width: 40%;
-    height: 100%;
-    float: right;
-    outline: none;
-}
 .searchinput{
     position: absolute;
     z-index: 1;
@@ -330,4 +296,11 @@ img {
     width: 100%;
     background-color: white;
     border-top: 1px dotted rgba(118, 118, 118, 0.24);
+}
+.edit{
+    position: relative;
+    z-index: 1;
+    margin: auto;
+    width: 20px;
+    height: 20px;
 }
