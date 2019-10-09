@@ -76,6 +76,7 @@ export default class Homepage extends Component {
         this.quit = this.quit.bind(this);
         this.selectedone = this.selectedone.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.checksearchif = this.checksearchif.bind(this);
     }
 
     changejectselect(event) {
@@ -212,8 +213,14 @@ export default class Homepage extends Component {
                             }
                         }`
         })
-            .then(reponse => this.setState({result_message: [reponse.data.language], ifMore: true}))
+            .then(reponse => this.checksearchif(reponse))
             .catch(error => this.setState({error: error.message}))
+    }
+
+    checksearchif(reponse) {
+        let ifMore;
+        ifMore = reponse.data.language.length > 25;
+        this.setState({result_message: [reponse.data.language], ifMore: ifMore})
     }
 
     LetMore() {
@@ -407,30 +414,30 @@ export default class Homepage extends Component {
                             <table className='contenttexttable'>
                                 {this.state.languageinclude && this.state.languageinclude.includes('en')
                                     ?
-                                    <th className='thstyle'><h1>en</h1></th> : null}
+                                    <th className='thstyle'><h2>en</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('es')
                                     ?
-                                    <th className='thstyle'><h1>es</h1></th> : null}
+                                    <th className='thstyle'><h2>es</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('ko')
                                     ?
-                                    <th className='thstyle'><h1>ko</h1></th> : null}
+                                    <th className='thstyle'><h2>ko</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('ja')
                                     ?
-                                    <th className='thstyle'><h1>ja</h1></th> : null}
+                                    <th className='thstyle'><h2>ja</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('sk')
                                     ?
-                                    <th className='thstyle'><h1>sk</h1></th> : null}
+                                    <th className='thstyle'><h2>sk</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('cs')
                                     ?
-                                    <th className='thstyle'><h1>cs</h1></th> : null}
+                                    <th className='thstyle'><h2>cs</h2></th> : null}
                                 {this.state.languageinclude && this.state.languageinclude.includes('fr')
                                     ?
-                                    <th className='thstyle'><h1>fr</h1></th> : null}
-                                <th className='thstyle'><h1>Editor</h1></th>
+                                    <th className='thstyle'><h2>fr</h2></th> : null}
+                                <th className='thstyle'><h2>Editor</h2></th>
                                 {
                                     this.state.result_message.map((item) =>
                                         item.map((item_content) =>
-                                            <tr className='table_tr'>
+                                            <tr className='table_tr' key={item_content.id}>
                                                 {this.state.languageinclude && this.state.languageinclude.includes('en') ?
                                                     <td className='width'>
                                                         <p>{item_content.en === null ? 'NULL' : item_content.en}</p>
@@ -460,7 +467,11 @@ export default class Homepage extends Component {
                                                     <td className='width'>
                                                         <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
                                                     </td> : null}
-                                                <td className='width_edit'><div className='edit'><img src={require('./images/edit.png')}/></div></td>                                       </tr>
+                                                <td className='width_edit'>
+                                                    <div className='edit' onClick={() => {
+                                                    }}><img src={require('./images/edit.png')}/></div>
+                                                </td>
+                                            </tr>
                                         ))}
                             </table>
                             <div className='letmorebox'>

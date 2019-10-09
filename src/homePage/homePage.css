@@ -161,6 +161,7 @@
     z-index: 1;
     border-bottom: 1px solid rgba(75, 75, 75, 0.2);
     height: 27px;
+    background-color: white;
 }
 
 td.width {
@@ -195,10 +196,11 @@ td.width_edit {
 }
 
 .thstyle {
-    background-color: rgba(0, 0, 0, 0.63);
+    background-color: rgb(236, 242, 244);
     border-left: 6px double rgb(245, 245, 255);
     border-right: 6px double rgb(245, 245, 255);
     line-height: 10%;
+    border-bottom: 1px solid rgba(75, 75, 75, 0.2);
 }
 
 .Logo {
@@ -303,4 +305,5 @@ img {
     margin: auto;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
