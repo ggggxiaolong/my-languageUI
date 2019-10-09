@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
 import {compose, spacing, palette} from '@material-ui/system';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -29,10 +30,11 @@ const MyTextField = styled(TextField)(
 );
 const MySelect = styled(TextField)({
     margin: 0,
+    padding:0,
     '& label': {
-        fontSize:'20px'
+        fontSize: '20px'
     },
-    // '& div': {height: '40px'}
+    '& div': {width: '250px'}
 });
 
 function findlanguage(arr, val) {
@@ -291,7 +293,7 @@ export default class Homepage extends Component {
                                     <MySelect
                                         id="standard-select-currency"
                                         select
-                                        label="Select"
+                                        label="ProjectId"
                                         // className={classes.textField}
                                         value={this.state.project_select}
                                         onChange={this.changejectselect}
@@ -300,7 +302,7 @@ export default class Homepage extends Component {
                                         //         className: classes.menu,
                                         //     },
                                         // }}
-                                        helperText="Please select your projectId"
+
                                         margin="normal"
                                         variant="outlined"
                                     >
@@ -312,42 +314,45 @@ export default class Homepage extends Component {
                                     </MySelect>
                                 </div>
                                 : null}
-                            <div className='languageUI'>
-                                <div className='selectone'><label>language:</label></div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_all' value='all'
-                                                                  onChange={e => this.change_language_select(e)}
-                                                                  checked={this.state.language_type.length === 8 || this.state.language_type.includes('all') ? 'checked' : null}
-                                /><label>All</label></div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_en' value='en'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>en</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_es' value='es'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('es') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>es</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='ko'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>ko</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='ja'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ja') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>ja</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='sk'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('sk') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>sk</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='cs'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('cs') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>cs</label>
-                                </div>
-                                <div className='selectone'><input type='checkbox' name='lanuage_ko' value='fr'
-                                                                  checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('fr') ? 'checked' : null}
-                                                                  onChange={e => this.change_language_select(e)}/><label>fr</label>
-                                </div>
+                        </div>
+                    </div>
+                    <div className='selectlanguage'>
+                        <div className='languageUI'>
+                            <div className='selectone'><label></label></div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_all' value='all'
+                                                                 onChange={e => this.change_language_select(e)}
+                                                                 checked={this.state.language_type.includes('all')}
+                            /><label>All</label></div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_en' value='en'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>English</label>
                             </div>
-                            <div className='searchinput'>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_es' value='es'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('es')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>Spanish</label>
+                            </div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ko'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>Korean</label>
+                            </div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ja'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ja')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>Japanese</label>
+                            </div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='sk'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('sk')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>French</label>
+                            </div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='cs'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('cs')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>Czech</label>
+                            </div>
+                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='fr'
+                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('fr')}
+                                                                 onChange={e => this.change_language_select(e)}/><label>French</label>
+                            </div>
+                        </div>
+                        <div className='searchinput'>
                                 <MyTextField
                                     id="outlined-search"
                                     label="Search field"
@@ -365,11 +370,10 @@ export default class Homepage extends Component {
                                     Search
                                 </Button>
                             </div>
-                        </div>
                     </div>
                     {this.state.result_message === null || this.state.result_message[0].length === 0 || (this.state.result_message[0][0] && this.state.result_message[0][0].project_id) || false
                         ?
-                        <div className='languagenodata'>no data</div>
+                        <div className='languagenodata'>No data</div>
                         :
                         <div className="contenttext">
                             <table className='contenttexttable'>
