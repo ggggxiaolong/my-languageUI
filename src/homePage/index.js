@@ -11,6 +11,8 @@ import {styled} from '@material-ui/core/styles';
 import {compose, spacing, palette} from '@material-ui/system';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
+import CometoTop from '../CometoTop'
+
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -212,7 +214,10 @@ export default class Homepage extends Component {
                             }
                         }`
         })
-            .then(reponse => this.setState({result_message: [reponse.data.language], ifMore: reponse.data.language.length === 25}))
+            .then(reponse => this.setState({
+                result_message: [reponse.data.language],
+                ifMore: reponse.data.language.length === 25
+            }))
             .catch(error => this.setState({error: error.message}))
     }
 
@@ -323,7 +328,7 @@ export default class Homepage extends Component {
                                         select
                                         label="ProjectId"
                                         // className={classes.textField}
-                                        value={this.state.project_select}
+                                        value={this.state.project_select || 'null'}
                                         onChange={this.changejectselect}
                                         // SelectProps={{
                                         //     MenuProps: {
@@ -461,7 +466,8 @@ export default class Homepage extends Component {
                                                         <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
                                                     </td> : null}
                                                 <td className='width_edit'>
-                                                    <div className='edit' onClick={() => {}}><img src={require('./images/edit.png')}/></div>
+                                                    <div className='edit' onClick={() => {
+                                                    }}><img src={require('./images/edit.png')}/></div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -480,6 +486,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     }
+                    <CometoTop top={this.state.scrollY}/>
                 </div>
         )
     }
