@@ -76,7 +76,6 @@ export default class Homepage extends Component {
         this.quit = this.quit.bind(this);
         this.selectedone = this.selectedone.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
-        this.checksearchif = this.checksearchif.bind(this);
     }
 
     changejectselect(event) {
@@ -213,14 +212,8 @@ export default class Homepage extends Component {
                             }
                         }`
         })
-            .then(reponse => this.checksearchif(reponse))
+            .then(reponse => this.setState({result_message: [reponse.data.language], ifMore: reponse.data.language.length === 25}))
             .catch(error => this.setState({error: error.message}))
-    }
-
-    checksearchif(reponse) {
-        let ifMore;
-        ifMore = reponse.data.language.length > 25;
-        this.setState({result_message: [reponse.data.language], ifMore: ifMore})
     }
 
     LetMore() {
@@ -468,8 +461,7 @@ export default class Homepage extends Component {
                                                         <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
                                                     </td> : null}
                                                 <td className='width_edit'>
-                                                    <div className='edit' onClick={() => {
-                                                    }}><img src={require('./images/edit.png')}/></div>
+                                                    <div className='edit' onClick={() => {}}><img src={require('./images/edit.png')}/></div>
                                                 </td>
                                             </tr>
                                         ))}
