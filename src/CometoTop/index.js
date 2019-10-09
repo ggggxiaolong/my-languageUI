@@ -13,7 +13,7 @@ export default function ComtoTop({top}) {
     });
     return (
         <div>
-            <MyFab color="secondary" size="large" aria-label="scroll back to top">
+            <MyFab color="secondary" size="large" aria-label="scroll back to top" onClick={() => window.scrollTo(0, 0)}>
                 <KeyboardArrowUpIcon/>
             </MyFab>
         </div>

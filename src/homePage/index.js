@@ -489,7 +489,7 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                     }
-                    {<CometoTop top={this.state.scrollY}/>}
+                    {this.state.scrollY > 1000 ? <CometoTop top={this.state.scrollY}/> : null}
                 </div>
         )
     }
