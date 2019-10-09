@@ -68,13 +68,13 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
         cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
         return (
             <div className='loginresult_suc'>
-                登陆成功 {loginsuccess_time}
+                Login successful, jump in {loginsuccess_time} seconds ...
             </div>)
 
     } else if (loginfail) {
         return (
             <div className='loginresult_fai'>
-                登陆失败
+                Wrong account or password
             </div>
         )
     } else {
@@ -164,10 +164,10 @@ export default function Login() {
                                onChange={(event) => changeusername('pwd', event)}
                                placeholder='Password'
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary"/>}
-                        label="Remember me"
-                    />
+                    {/*<FormControlLabel*/}
+                        {/*control={<Checkbox value="remember" color="primary"/>}*/}
+                        {/*label="Remember me"*/}
+                    {/*/>*/}
                     <Button
                         fullWidth
                         variant="contained"
