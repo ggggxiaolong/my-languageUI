@@ -45,6 +45,13 @@
     float: left;
 }
 
+.button_yes_one {
+    background-color: rgba(122, 122, 122, 0.73);
+    border-radius: 10px;
+    width: 40%;
+    height: 100%;
+}
+
 .button_no {
     background-color: rgba(92, 119, 255, 0.48);
     border-radius: 10px;

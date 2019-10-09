@@ -43,7 +43,7 @@
     z-index: 1;
     /*width: 10%;*/
     float: left;
-    padding-left: 3%;
+    padding-left: 1%;
 }
 
 .selectoneTop {
@@ -174,7 +174,10 @@ td.width {
 .letmorebox {
     position: relative;
     z-index: 1;
+    width: 10%;
     height: 70px;
+    margin: 10px auto;
+    text-align: center;
 }
 
 .thstyle {
@@ -314,8 +317,9 @@ img {
     top: 20%;
 }
 .radiolocation{
-    position: relative;
+    position: absolute;
     z-index: 1;
+    left: 1.2%;
     height: 100%;
     top: 3%;
 }

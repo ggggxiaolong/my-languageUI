@@ -30,7 +30,7 @@ const MyTextField = styled(TextField)(
 );
 const MySelect = styled(TextField)({
     margin: 0,
-    padding:0,
+    padding: 0,
     '& label': {
         fontSize: '20px'
     },
@@ -62,6 +62,7 @@ export default class Homepage extends Component {
             ifquit: false,
             quitsure: null,
             search: null,
+            nosearch:false,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -72,6 +73,7 @@ export default class Homepage extends Component {
         this.LetMore = this.LetMore.bind(this);
         this.addresultmessage = this.addresultmessage.bind(this);
         this.quit = this.quit.bind(this);
+        this.selectedone = this.selectedone.bind(this);
     }
 
     changejectselect(event) {
@@ -150,6 +152,9 @@ export default class Homepage extends Component {
     }
 
     submitSearch() {
+        if (this.state.language_type.length === 1 || this.state.project_select === null){
+            this.setState({nosearch:true})
+        }
         const paramfrom = this.state.language_type;
         let languageinclude = [];
         if (paramfrom.includes('en')) {
@@ -246,6 +251,11 @@ export default class Homepage extends Component {
         // newlist.map(item => item.map(item => console.log(item.en)));
         this.setState({result_message: newlist, page: this.state.page + 1})
     }
+    selectedone(selected){
+        if (selected === true){
+            this.setState({nosearch:false})
+        }
+    }
 
     changeSearch(search) {
         search = search.target.value;
@@ -285,7 +295,10 @@ export default class Homepage extends Component {
                             <Router><Redirect to="/login"/></Router>
                             :
                             <Popup_window title='Log out' content='Are you sure you want to log out ?' fun={this.quit}/>
-                        : null}
+                        :this.state.nosearch
+                        ?
+                            <Popup_window title='Selected' content='Please select project and language' fun={() => {this.selectedone(true)}} surebutton='I konwn'/>
+                        :null}
                     <div className='homepageUI'>
                         <div className='object_location'>
                             {this.state.result ?
@@ -304,7 +317,7 @@ export default class Homepage extends Component {
                                         // }}
 
                                         margin="normal"
-                                        variant="outlined"
+                                        // variant="outlined"
                                     >
                                         {this.state.result.map(option => (
                                             <MenuItem key={option.id} value={option.id}>
@@ -353,23 +366,23 @@ export default class Homepage extends Component {
                             </div>
                         </div>
                         <div className='searchinput'>
-                                <MyTextField
-                                    id="outlined-search"
-                                    label="Search field"
-                                    type="search"
-                                    margin="dense"
-                                    variant="outlined"
-                                    onChange={(search) => this.changeSearch(search)}
-                                />
-                            </div>
-                            <div className='searchclick'>
-                                <Button fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => this.submitSearch()}>
-                                    Search
-                                </Button>
-                            </div>
+                            <MyTextField
+                                id="outlined-search"
+                                label="Search field"
+                                type="search"
+                                margin="dense"
+                                variant="outlined"
+                                onChange={(search) => this.changeSearch(search)}
+                            />
+                        </div>
+                        <div className='searchclick'>
+                            <Button fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => this.submitSearch()}>
+                                Search
+                            </Button>
+                        </div>
                     </div>
                     {this.state.result_message === null || this.state.result_message[0].length === 0 || (this.state.result_message[0][0] && this.state.result_message[0][0].project_id) || false
                         ?
@@ -437,7 +450,11 @@ export default class Homepage extends Component {
                             <div className='letmorebox'>
                                 {this.state.ifMore
                                     ?
-                                    <button className='letmore' onClick={this.LetMore}>Let More...</button>
+                                    <Button fullWidth
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={this.LetMore}>
+                                        Let More...</Button>
                                     :
                                     <div className='letmore'><span>No more message....</span></div>
                                 }
