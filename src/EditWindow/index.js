@@ -7,7 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function EditWindow({title, fun,submit,content,id}) {
+export default function EditWindow({title, fun, submit, content, id}) {
+    const languageforid = content.map(item => item.filter(item_content => item_content.id === id));
+    console.log(languageforid[0]);
     return (
         <div>
             <Dialog
@@ -18,10 +20,30 @@ export default function EditWindow({title, fun,submit,content,id}) {
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <div>
-                {content.map((item) =>
-                    item.map((item_content) =>
-                        <div key={item_content.id}>{item_content.id}</div>
-                    )
+                {languageforid[0].map(item =>
+                    <div className='contentlanguage'>
+                    <p>
+                        {item.en}
+                    </p>
+                    <p>
+                        {item.es}
+                    </p>
+                    <p>
+                        {item.ko}
+                    </p>
+                    <p>
+                        {item.ja}
+                    </p>
+                    <p>
+                        {item.sk}
+                    </p>
+                    <p>
+                        {item.cs}
+                    </p>
+                    <p>
+                        {item.fr}
+                    </p>
+                    </div>
                 )}
                 </div>
                 <DialogActions>
