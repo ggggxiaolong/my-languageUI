@@ -1,5 +1,9 @@
 .contentlanguage{
+    position: relative;
+    z-index: 1;
     text-align: left;
+    text-indent: 20px;
+    padding: 0 5px 0 5px;
 }
 .languagebox{
     position: relative;

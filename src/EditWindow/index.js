@@ -5,7 +5,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import {styled} from '@material-ui/core/styles';
 
+const MyButton = styled(Button)({
+    margin: "auto",
+});
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -17,7 +21,7 @@ export default function EditWindow({title, fun, submit, content, id}) {
             <Dialog
                 fullWidth={true}
                 TransitionComponent={Transition}
-                maxWidth='lg'
+                maxWidth='md'
                 open={true}
                 onClose={() => fun(false)}
                 aria-labelledby="alert-dialog-title"
@@ -28,36 +32,36 @@ export default function EditWindow({title, fun, submit, content, id}) {
                     {languageforid.map(item => item.map(item =>
                         <div className='contentlanguage'>
                             <p>
-                                {item.en}
+                                <span><b>en:</b>{item.en === null ? 'NULL' : item.en}</span>
                             </p>
                             <p>
-                                {item.es}
+                                 <span><b>es:</b>{item.es === null ? 'NULL' : item.es}</span>
                             </p>
                             <p>
-                                {item.ko}
+                                 <span><b>ko:</b>{item.ko === null ? 'NULL' : item.ko}</span>
                             </p>
                             <p>
-                                {item.ja}
+                                 <span><b>ja:</b>{item.ja === null ? 'NULL' : item.ja}</span>
                             </p>
                             <p>
-                                {item.sk}
+                                 <span><b>sk:</b>{item.sk === null ? 'NULL' : item.sk}</span>
                             </p>
                             <p>
-                                {item.cs}
+                                 <span><b>cs:</b>{item.cs === null ? 'NULL' : item.cs}</span>
                             </p>
                             <p>
-                                {item.fr}
+                                 <span><b>fr:</b>{item.fr === null ? 'NULL' : item.fr}</span>
                             </p>
                         </div>
                     ))}
                 </div>
                 <DialogActions>
-                    <Button onClick={() => fun(false)} color="primary">
+                    <MyButton onClick={() => fun(false)} color="primary">
                         Cancel
-                    </Button>
-                    <Button onClick={() => submit()} color="primary" autoFocus>
+                    </MyButton>
+                    <MyButton onClick={() => submit()} color="primary" autoFocus>
                         Submit
-                    </Button>
+                    </MyButton>
                 </DialogActions>
             </Dialog>
         </div>
