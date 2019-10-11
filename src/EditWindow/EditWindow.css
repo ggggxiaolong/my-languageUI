@@ -1,7 +1,7 @@
 .contentlanguage{
     position: relative;
     z-index: 1;
-    text-align: left;
+    text-align: center;
     text-indent: 20px;
     padding: 0 5px 0 5px;
 }
@@ -10,4 +10,8 @@
     z-index: 1;
     width: 200%;
     height: 200%;
+}
+.modify_button{
+    cursor: pointer;
+    color: #ff6e1f;
 }
