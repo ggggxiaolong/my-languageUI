@@ -294,7 +294,6 @@ export default class Homepage extends Component {
     }
 
     render() {
-        console.log(this.state.result_message);
         return (
             this.state.error !== null
                 ?
