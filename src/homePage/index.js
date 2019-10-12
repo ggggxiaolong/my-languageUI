@@ -13,7 +13,9 @@ import {styled} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import CometoTop from '../CometoTop'
+import {useApolloClient, useMutation} from '@apollo/react-hooks';
 
+// import gql  from 'graphql-tag';
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -68,7 +70,7 @@ export default class Homepage extends Component {
             nosearch: false,
             scrollY: 0,
             editwindow: false,
-            id:null,
+            id: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -284,14 +286,50 @@ export default class Homepage extends Component {
         }
     }
 
-    editon(ifediton,id) {
-        this.setState({id:id});
+    editon(ifediton, id) {
+        this.setState({id: id});
         if (ifediton === false) {
             this.setState({editwindow: false})
         } else {
             this.setState({editwindow: true})
         }
     }
+
+    submit = (contentold, contentnew) => {
+        const client = new ApolloClient({
+            uri: 'http://localhost:4000/graphql',
+            headers: {
+                token: cookie.load('tokenaccessToken'),
+                refreshToken: cookie.load('refreshToken'),
+            },
+        });
+        client.mutate({
+            mutation: gql`mutation test{
+                   updateLang(lang:{id:${contentnew[0].id},
+                    en:"${contentnew[0].new_en}",
+                    es:"${contentnew[0].new_es}",
+                    ko:"${contentnew[0].new_ko}",
+                    ja:"${contentnew[0].new_ja}",
+                    sk:"${contentnew[0].new_sk}",
+                    cs:"${contentnew[0].new_cs}",
+                    fr:"${contentnew[0].new_fr}"})
+                    {
+                         id
+                    }
+            }`
+        })
+            .then(reponse => this.ifreponsesuccess(reponse))
+            .catch(error => this.setState({error: error.message}));
+
+        contentold[0].new_en = contentnew[0].new_en;
+        contentold[0].new_es = contentnew[0].new_es;
+        contentold[0].new_ko = contentnew[0].new_ko;
+        contentold[0].new_ja = contentnew[0].new_ja;
+        contentold[0].new_sk = contentnew[0].new_sk;
+        contentold[0].new_cs = contentnew[0].new_cs;
+        contentold[0].new_fr = contentnew[0].new_fr;
+    };
+
 
     render() {
         return (
@@ -516,7 +554,8 @@ export default class Homepage extends Component {
                                                         </div>
                                                     </td> : null}
                                                 <td className='width_edit'>
-                                                    <div className='edit' onClick={() => this.editon(true,item_content.id)}><img
+                                                    <div className='edit'
+                                                         onClick={() => this.editon(true, item_content.id)}><img
                                                         src={require('./images/edit.png')}/></div>
                                                 </td>
                                             </tr>
@@ -539,7 +578,8 @@ export default class Homepage extends Component {
                     }
                     {this.state.scrollY > 1000 ?
                         <CometoTop top={this.state.scrollY > 1000 ? this.state.scrollY : null}/> : null}
-                    {this.state.editwindow ? <EditWindow fun={this.editon} title='Edit language' submit={() => {}} content={this.state.result_message} id={this.state.id}/> : null}
+                    {this.state.editwindow ? <EditWindow fun={this.editon} title='Edit language' submit={this.submit}
+                                                         content={this.state.result_message} id={this.state.id}/> : null}
                 </div>
         )
     }

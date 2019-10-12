@@ -15,19 +15,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 export default function EditWindow({title, fun, submit, content, id}) {
-    const contentnew = [];
+    const contentold = [];
     const languageforid = content.map(item => item.filter(item_content => item_content.id === id));
     languageforid.map(item =>
-        item.map(itemnew => contentnew.push(itemnew))
+        item.map(itemnew => contentold.push(itemnew))
     );
+    let contentnew_one =  JSON.parse(JSON.stringify(contentold));
     const [ifModify, setifModify] = useState(false);
     const [languagetype, setlanguagetype] = useState(null);
-    const [newlanguage, setnewlanguage] = useState(contentnew[0]["new_" + languagetype]);
-
-
+    const [newlanguage, setnewlanguage] = useState(null);
+    const [contentnew, setcontentnew] = useState(contentnew_one);
     function setModify(id, name) {
         setifModify(true);
         setlanguagetype(name);
+        setnewlanguage(contentold[0]["new_" + name]);
+
     }
 
     function changenewlanguage(event) {
@@ -35,11 +37,9 @@ export default function EditWindow({title, fun, submit, content, id}) {
     }
 
     function enternewlanguage() {
-        languageforid[0][0]["new_" + languagetype] = newlanguage;
-        setifModify(false)
-
+        contentnew[0]["new_" + languagetype] = newlanguage;
+        setifModify(false);
     }
-
     return (
         <div>
             <Dialog
@@ -53,7 +53,7 @@ export default function EditWindow({title, fun, submit, content, id}) {
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 {!ifModify ? <div>
-                        {languageforid.map(item => item.map(item =>
+                        {contentnew.map(item =>
                             <div className='contentlanguage'>
                                 <p>
                                     <span><b>en: </b>{item.en === null ? 'NULL' : item.en}</span>&nbsp;&nbsp;<a className='modify_button'
@@ -105,7 +105,7 @@ export default function EditWindow({title, fun, submit, content, id}) {
                                     <span><b>new_fr: </b>{item.new_fr === null ? '' : item.new_fr}</span>
                                 </p>:null}
                             </div>
-                        ))}
+                        )}
                     </div>
                     : <div>
                         {languagetype === 'en' ? contentnew[0].en
@@ -134,7 +134,7 @@ export default function EditWindow({title, fun, submit, content, id}) {
                         : <MyButton onClick={() => setifModify(false)} color="primary">
                             Cancel
                         </MyButton>}
-                    {!ifModify ? <MyButton onClick={() => submit()} color="primary" autoFocus>
+                    {!ifModify ? <MyButton onClick={() => submit(contentold,contentnew)} color="primary" autoFocus>
                             Submit
                         </MyButton>
                         : <MyButton onClick={enternewlanguage} color="primary" autoFocus>
