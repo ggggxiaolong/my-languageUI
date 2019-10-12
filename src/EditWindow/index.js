@@ -42,9 +42,9 @@ export default function EditWindow({title, fun, language_type, submit, content, 
         contentnew[0]["new_" + languagetype] = newlanguage;
         setifModify(false);
     }
-    function onKeyUp(e) {
+    function onKeyDown(e) {
         if (e.keyCode === 13){
-            window.returnValue = false;
+            enternewlanguage()
         }
     }
     return (
@@ -134,7 +134,7 @@ export default function EditWindow({title, fun, language_type, submit, content, 
                         </div>
                         <div className='editwindow_input'>
                             <TextField
-                                onKeyUp={(e) => onKeyUp(e)}
+                                onKeyDown={(e) => onKeyDown(e)}
                                 fullWidth={true}
                                 id="outlined-multiline-static"
                                 label="Edit and update this data..."
