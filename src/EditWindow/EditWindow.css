@@ -15,3 +15,11 @@
     cursor: pointer;
     color: #ff6e1f;
 }
+.editwindow{
+    position: relative;
+}
+.editwindow_input{
+    position: relative;
+    margin: auto;
+    width: 80%;
+}

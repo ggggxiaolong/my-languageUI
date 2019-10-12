@@ -14,17 +14,19 @@ const MyButton = styled(Button)({
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function EditWindow({title, fun, submit, content, id}) {
+export default function EditWindow({title, fun, language_type, submit, content, id}) {
+    const languagetype_old = language_type;
     const contentold = [];
     const languageforid = content.map(item => item.filter(item_content => item_content.id === id));
     languageforid.map(item =>
         item.map(itemnew => contentold.push(itemnew))
     );
-    let contentnew_one =  JSON.parse(JSON.stringify(contentold));
+    let contentnew_one = JSON.parse(JSON.stringify(contentold));
     const [ifModify, setifModify] = useState(false);
     const [languagetype, setlanguagetype] = useState(null);
     const [newlanguage, setnewlanguage] = useState(null);
     const [contentnew, setcontentnew] = useState(contentnew_one);
+
     function setModify(id, name) {
         setifModify(true);
         setlanguagetype(name);
@@ -39,6 +41,11 @@ export default function EditWindow({title, fun, submit, content, id}) {
     function enternewlanguage() {
         contentnew[0]["new_" + languagetype] = newlanguage;
         setifModify(false);
+    }
+    function onKeyUp(e) {
+        if (e.keyCode === 13){
+            window.returnValue = false;
+        }
     }
     return (
         <div>
@@ -55,77 +62,90 @@ export default function EditWindow({title, fun, submit, content, id}) {
                 {!ifModify ? <div>
                         {contentnew.map(item =>
                             <div className='contentlanguage'>
-                                <p>
-                                    <span><b>en: </b>{item.en === null ? 'NULL' : item.en}</span>&nbsp;&nbsp;<a className='modify_button'
+                                {languagetype_old.includes('en') ? <p>
+                                    <span><b>en: </b>{item.en === null ? 'NULL' : item.en}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'en')}>Modify</a>
-                                </p>
-                                {item.new_en ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('en') ? item.new_en ? <p>
                                     <span><b>new_en: </b>{item.new_en === null ? '' : item.new_en}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>es: </b>{item.es === null ? 'NULL' : item.es}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('es') ? <p>
+                                    <span><b>es: </b>{item.es === null ? 'NULL' : item.es}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'es')}>Modify</a>
-                                </p>
-                                {item.new_es ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('es') ? item.new_es ? <p>
                                     <span><b>new_es: </b>{item.new_es === null ? '' : item.new_es}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>ko: </b>{item.ko === null ? 'NULL' : item.ko}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('ko') ? <p>
+                                    <span><b>ko: </b>{item.ko === null ? 'NULL' : item.ko}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'ko')}>Modify</a>
-                                </p>
-                                {item.new_ko ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('ko') ? item.new_ko ? <p>
                                     <span><b>new_ko: </b>{item.new_ko === null ? '' : item.new_ko}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>ja: </b>{item.ja === null ? 'NULL' : item.ja}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('ja') ? <p>
+                                    <span><b>ja: </b>{item.ja === null ? 'NULL' : item.ja}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'ja')}>Modify</a>
-                                </p>
-                                {item.new_ja ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('ja') ? item.new_ja ? <p>
                                     <span><b>new_ja: </b>{item.new_ja === null ? '' : item.new_ja}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>sk: </b>{item.sk === null ? 'NULL' : item.sk}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('sk') ? <p>
+                                    <span><b>sk: </b>{item.sk === null ? 'NULL' : item.sk}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'sk')}>Modify</a>
-                                </p>
-                                {item.new_sk ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('sk') ? item.new_sk ? <p>
                                     <span><b>new_sk: </b>{item.new_sk === null ? '' : item.new_sk}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>cs: </b>{item.cs === null ? 'NULL' : item.cs}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('cs') ? <p>
+                                    <span><b>cs: </b>{item.cs === null ? 'NULL' : item.cs}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'cs')}>Modify</a>
-                                </p>
-                                {item.new_cs ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('cs') ? item.new_cs ? <p>
                                     <span><b>new_cs: </b>{item.new_cs === null ? '' : item.new_cs}</span>
-                                </p>:null}
-                                <p>
-                                    <span><b>fr: </b>{item.fr === null ? 'NULL' : item.fr}</span>&nbsp;&nbsp;<a className='modify_button'
+                                </p> : null : null}
+                                {languagetype_old.includes('fr') ? <p>
+                                    <span><b>fr: </b>{item.fr === null ? 'NULL' : item.fr}</span>&nbsp;&nbsp;<a
+                                    className='modify_button'
                                     onClick={() => setModify(item.id, 'fr')}>Modify</a>
-                                </p>
-                                {item.new_fr ? <p>
+                                </p> : null}
+                                {languagetype_old.includes('fr') ? item.new_fr ? <p>
                                     <span><b>new_fr: </b>{item.new_fr === null ? '' : item.new_fr}</span>
-                                </p>:null}
+                                </p> : null : null}
                             </div>
                         )}
                     </div>
                     : <div>
-                        {languagetype === 'en' ? contentnew[0].en
-                            : languagetype === 'es' ? contentnew[0].es
-                                : languagetype === 'ko' ? contentnew[0].ko
-                                    : languagetype === 'ja' ? contentnew[0].ja
-                                        : languagetype === 'sk' ? contentnew[0].sk
-                                            : languagetype === 'cs' ? contentnew[0].cs
-                                                : languagetype === 'fr' ? contentnew[0].fr
-                                                    : null}
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Modify"
-                            multiline
-                            rows="4"
-                            defaultValue={contentnew[0]["new_" + languagetype]}
-                            margin="normal"
-                            variant="outlined"
-                            onChange={changenewlanguage}
-                        />
+                        <div className='editwindow_content'>
+                            {languagetype === 'en' ? 'en:' + contentnew[0].en
+                                : languagetype === 'es' ? 'es:' + contentnew[0].es
+                                    : languagetype === 'ko' ? 'ko:' + contentnew[0].ko
+                                        : languagetype === 'ja' ? 'ja:' + contentnew[0].ja
+                                            : languagetype === 'sk' ? 'sk:' + contentnew[0].sk
+                                                : languagetype === 'cs' ? 'cs:' + contentnew[0].cs
+                                                    : languagetype === 'fr' ? 'fr:' + contentnew[0].fr
+                                                        : null}
+                        </div>
+                        <div className='editwindow_input'>
+                            <TextField
+                                onKeyUp={(e) => onKeyUp(e)}
+                                fullWidth={true}
+                                id="outlined-multiline-static"
+                                label="Edit and update this data..."
+                                multiline
+                                rows="4"
+                                defaultValue={contentnew[0]["new_" + languagetype]}
+                                margin="normal"
+                                variant="outlined"
+                                onChange={changenewlanguage}
+                            />
+                        </div>
                     </div>}
                 <DialogActions>
                     {!ifModify ? <MyButton onClick={() => fun(false)} color="primary">
@@ -134,7 +154,7 @@ export default function EditWindow({title, fun, submit, content, id}) {
                         : <MyButton onClick={() => setifModify(false)} color="primary">
                             Cancel
                         </MyButton>}
-                    {!ifModify ? <MyButton onClick={() => submit(contentold,contentnew)} color="primary" autoFocus>
+                    {!ifModify ? <MyButton onClick={() => submit(contentold, contentnew)} color="primary" autoFocus>
                             Submit
                         </MyButton>
                         : <MyButton onClick={enternewlanguage} color="primary" autoFocus>
