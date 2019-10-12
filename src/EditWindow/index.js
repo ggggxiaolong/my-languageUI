@@ -123,13 +123,13 @@ export default function EditWindow({title, fun, language_type, submit, content, 
                     </div>
                     : <div>
                         <div className='editwindow_content'>
-                            {languagetype === 'en' ? 'en:' + contentnew[0].en
-                                : languagetype === 'es' ? 'es:' + contentnew[0].es
-                                    : languagetype === 'ko' ? 'ko:' + contentnew[0].ko
-                                        : languagetype === 'ja' ? 'ja:' + contentnew[0].ja
-                                            : languagetype === 'sk' ? 'sk:' + contentnew[0].sk
-                                                : languagetype === 'cs' ? 'cs:' + contentnew[0].cs
-                                                    : languagetype === 'fr' ? 'fr:' + contentnew[0].fr
+                            {languagetype === 'en' ? 'English: ' + contentnew[0].en
+                                : languagetype === 'es' ? 'Spanish: ' + contentnew[0].es
+                                    : languagetype === 'ko' ? 'Korean: ' + contentnew[0].ko
+                                        : languagetype === 'ja' ? 'Japanese: ' + contentnew[0].ja
+                                            : languagetype === 'sk' ? 'French: ' + contentnew[0].sk
+                                                : languagetype === 'cs' ? 'Czech: ' + contentnew[0].cs
+                                                    : languagetype === 'fr' ? 'FrenchSearch: ' + contentnew[0].fr
                                                         : null}
                         </div>
                         <div className='editwindow_input'>
