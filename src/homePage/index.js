@@ -84,6 +84,7 @@ export default class Homepage extends Component {
         this.selectedone = this.selectedone.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.editon = this.editon.bind(this);
+        this.ifreponsesuccess = this.ifreponsesuccess.bind(this);
     }
 
     changejectselect(event) {
@@ -306,13 +307,13 @@ export default class Homepage extends Component {
         client.mutate({
             mutation: gql`mutation test{
                    updateLang(lang:{id:${contentnew[0].id},
-                    en:"${contentnew[0].new_en}",
-                    es:"${contentnew[0].new_es}",
-                    ko:"${contentnew[0].new_ko}",
-                    ja:"${contentnew[0].new_ja}",
-                    sk:"${contentnew[0].new_sk}",
-                    cs:"${contentnew[0].new_cs}",
-                    fr:"${contentnew[0].new_fr}"})
+                    en:"${contentnew[0].new_en === null ? '':contentnew[0].new_en}",
+                    es:"${contentnew[0].new_es === null ? '':contentnew[0].new_es}",
+                    ko:"${contentnew[0].new_ko === null ? '':contentnew[0].new_ko}",
+                    ja:"${contentnew[0].new_ja === null ? '':contentnew[0].new_ja}",
+                    sk:"${contentnew[0].new_sk === null ? '':contentnew[0].new_sk}",
+                    cs:"${contentnew[0].new_cs === null ? '':contentnew[0].new_cs}",
+                    fr:"${contentnew[0].new_fr === null ? '':contentnew[0].new_fr}"})
                     {
                          id
                     }
@@ -329,7 +330,11 @@ export default class Homepage extends Component {
         contentold[0].new_cs = contentnew[0].new_cs;
         contentold[0].new_fr = contentnew[0].new_fr;
     };
-
+    ifreponsesuccess(reponse){
+        if (reponse){
+            this.setState({editwindow:false})
+        }
+    }
 
     render() {
         return (
