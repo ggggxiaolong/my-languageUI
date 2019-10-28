@@ -582,7 +582,7 @@ export default class Homepage extends Component {
                         </div>
                     }
                     {this.state.scrollY > 1000 ?
-                        <CometoTop top={this.state.scrollY > 1000 ? this.state.scrollY : null}/> : null}
+                        <CometoTop /> : null}
                     {this.state.editwindow ? <EditWindow fun={this.editon} title='Edit language' language_type={this.state.language_type} submit={this.submit}
                                                          content={this.state.result_message} id={this.state.id}/> : null}
                 </div>

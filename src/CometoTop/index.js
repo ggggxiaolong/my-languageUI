@@ -4,12 +4,12 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 
-export default function ComtoTop({top}) {
+export default function ComtoTop() {
     const MyFab = styled(Fab)({
-        position: "absolute",
+        position: "fixed",
         zIndex:99,
         right: "50px",
-        bottom: 90 - top,
+        top: "80%",
     });
     return (
         <div>
