@@ -68,13 +68,20 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
         cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
         return (
             <div className='loginresult_suc'>
-                Login successful, jump in {loginsuccess_time} seconds ...
+                {/*<label className="locat"></label>*/}
+                <div className="myicon-tick-checked"/>
+                <span className="locat">
+                Login in {loginsuccess_time} seconds ...
+                </span>
             </div>)
 
     } else if (loginfail) {
         return (
-            <div className='loginresult_fai'>
+            <div className='loginresult_fail'>
+                <div className="myicon-tick-worring"/>
+                <span className="locat">
                 Wrong account or password
+                </span>
             </div>
         )
     } else {
@@ -165,8 +172,8 @@ export default function Login() {
                                placeholder='Password'
                     />
                     {/*<FormControlLabel*/}
-                        {/*control={<Checkbox value="remember" color="primary"/>}*/}
-                        {/*label="Remember me"*/}
+                    {/*control={<Checkbox value="remember" color="primary"/>}*/}
+                    {/*label="Remember me"*/}
                     {/*/>*/}
                     <Button
                         fullWidth

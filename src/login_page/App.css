@@ -69,31 +69,79 @@
     outline: none;
 }
 
+.locat {
+    position: relative;
+    z-index: 1;
+    top: 20%;
+    height: 100%;
+    width: 100%;
+    left: 3%;
+    /*background-color: white;*/
+}
+
 .loginresult_suc {
     position: absolute;
     z-index: 1;
-    width: 20%;
-    height: 8%;
-    left: 40%;
+    width: 14%;
+    height: 4%;
+    left: 43%;
     border-radius: 5px;
     font-size: 17px;
-    color: rgba(0, 67, 0, 0.67);
-
+    /*top: -4%;*/
+    text-align: center;
+    background-color: rgba(165, 165, 165, 0.09);
+    box-shadow: 1px 1px 3px #0b0605;
+    color: rgba(218, 0, 0, 0.63);
+    animation: tofail 500ms forwards;
 }
 
-.loginresult_fai {
+.myicon-tick-checked {
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #2ac845;
+    top: 23%;
+    right: 3%;
+}
+.myicon-tick-worring {
+    display: inline-block;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    top: 23%;
+    right: 3%;
+}
+.loginresult_fail {
     position: absolute;
     z-index: 1;
-    width: 20%;
-    height: 8%;
-    left: 40%;
+    width: 14%;
+    height: 4%;
+    left: 43%;
     border-radius: 5px;
     font-size: 17px;
-    color: rgba(126, 0, 0, 0.63);
-    padding-top: 20px;
+    /*top: -4%;*/
+    text-align: center;
+    background-color: rgba(165, 165, 165, 0.08);
+    box-shadow:1px 1px 3px #0b0605;
+    color: rgba(218, 0, 0, 0.63);
+    animation: tofail 500ms forwards;
 }
-.bigdiv{
+@keyframes tofail {
+    0%{
+        top: -14%;
+    }
+    100%{
+        top: -1%;
+    }
+}
+
+.bigdiv {
     position: absolute;
+    top: 5%;
     width: 100%;
     height: 100%;
 }
