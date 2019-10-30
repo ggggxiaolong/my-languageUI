@@ -335,7 +335,11 @@ export default class Homepage extends Component {
             this.setState({editwindow:false})
         }
     }
-
+    search(e){
+        if (e.keyCode === 13){
+            this.submitSearch()
+        }
+    }
     render() {
         return (
             this.state.error !== null
@@ -442,6 +446,7 @@ export default class Homepage extends Component {
                         </div>
                         <div className='searchinput'>
                             <MyTextField
+                                onKeyUp={e => this.search(e)}
                                 id="outlined-search"
                                 label="Search field"
                                 type="search"
