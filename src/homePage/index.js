@@ -320,7 +320,8 @@ export default class Homepage extends Component {
             },
         });
         client.mutate({
-            mutation: gql`mutation test{
+            mutation: gql`
+            mutation test{
                    updateLang(lang:{id:${contentnew[0].id},
                     en:"${contentnew[0].new_en === null ? '' : contentnew[0].new_en}",
                     es:"${contentnew[0].new_es === null ? '' : contentnew[0].new_es}",
@@ -624,7 +625,7 @@ export default class Homepage extends Component {
                                     submit={this.submit}
                                     content={this.state.result_message} id={this.state.id}/> : null}
                     {this.state.addlanguage ?
-                        <AddLanguage fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
+                        <AddLanguage projectid={this.state.project_select} fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
                     }
                 </div>
         )

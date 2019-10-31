@@ -5,15 +5,62 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {styled} from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import ApolloClient from 'apollo-boost'
+import {gql} from 'apollo-boost'
+import cookie from 'react-cookies'
 const MyButton = styled(Button)({
     margin: "auto",
 });
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: 200,
+  },
+}));
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function EditWindow({title, fun, submit}) {
+
+export default function EditWindow({title, fun, submit,projectid}) {
+    const classes = useStyles();
+    const [English,setEnglish] = useState(null);
+    function ChangeEnglish(value) {
+        setEnglish(value.target.value);
+    }
+     function EnglishOK() {
+       const client = new ApolloClient({
+            uri: 'http://192.168.1.112:4000/graphql',
+            headers: {
+                token: cookie.load('tokenaccessToken'),
+                refreshToken: cookie.load('refreshToken'),
+            },
+        });
+        client.mutate({
+            mutation: gql`
+            mutation addLang{
+            addLang(lang:{not_trans:0,project_id:${projectid}}){
+            en
+               }
+             }
+            `
+        })
+            .then(result => console.log(result))
+            // .catch(error)
+    }
 
     return (
         <div>
@@ -28,23 +75,20 @@ export default function EditWindow({title, fun, submit}) {
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <div className='editwindow_input'>
-                    <div className="languagetype">en:</div>
-                    <TextField
-                        fullWidth={true}
-                        id="outlined-multiline-static"
-                        label="Add the new data..."
-                        multiline
-                        rows="4"
-                        margin="normal"
-                        variant="outlined"
-                    />
+                    <FormControl fullWidth className={classes.margin}>
+                        <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
+                        <Input
+                            id="standard-adornment-amount"
+                            onChange={value => ChangeEnglish(value)}
+                        />
+                    </FormControl>
                 </div>
                 <DialogActions>
                     <MyButton onClick={() => fun(false)} color="primary">
                         Cancel
                     </MyButton>
-                    <MyButton onClick={() => submit()} color="primary">
-                        Submit
+                    <MyButton onClick={() => EnglishOK()} color="primary">
+                        OK
                     </MyButton>
                 </DialogActions>
             </Dialog>
