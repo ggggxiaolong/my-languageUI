@@ -9,6 +9,7 @@ import EditWindow from '../EditWindow'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
+import AddLanguage from '../AddLanguage'
 // import {compose, spacing, palette} from '@material-ui/system';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -68,6 +69,7 @@ export default class Homepage extends Component {
             scrollY: 0,
             editwindow: false,
             id: null,
+            addlanguage: false,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -82,6 +84,7 @@ export default class Homepage extends Component {
         this.handleScroll = this.handleScroll.bind(this);
         this.editon = this.editon.bind(this);
         this.ifreponsesuccess = this.ifreponsesuccess.bind(this);
+        this.addlanguage = this.addlanguage.bind(this);
     }
 
     changejectselect(event) {
@@ -148,7 +151,7 @@ export default class Homepage extends Component {
 
     projectselect() {
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://192.168.1.112:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -217,7 +220,7 @@ export default class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://192.168.1.112:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -253,7 +256,7 @@ export default class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://192.168.1.112:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -310,7 +313,7 @@ export default class Homepage extends Component {
 
     submit = (contentold, contentnew) => {
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://192.168.1.112:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -355,6 +358,16 @@ export default class Homepage extends Component {
         }
     }
 
+    addlanguage(IF) {
+        if (IF === false) {
+            this.setState({addlanguage: false})
+        } else if (IF === true) {
+            this.setState({addlanguage: true})
+        }
+    }
+    addlanguagesubmit(){
+
+    }
     render() {
         return (
             this.state.error !== null
@@ -364,8 +377,8 @@ export default class Homepage extends Component {
                     !this.state.iflogin_forward
                         ?
                         <PopupWindow top={this.state.scrollY} oneselect={1} surebutton='Login'
-                                      title='Login timeout'
-                                      content='Login has expired, please login again .' fun={this.setloginforward}/>
+                                     title='Login timeout'
+                                     content='Login has expired, please login again .' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
@@ -373,7 +386,9 @@ export default class Homepage extends Component {
                         <div className='homepagetitle_change'>
                             <div className='Logo'><span><b>TappLock</b></span></div>
                             <div className='personal'>
-                                <div className='personalimage'><img src={require('./images/admin.png')}/></div>
+                                <div className='personalimage'><img src={require('./images/admin.png')}
+                                                                    alt="user's picture"/>
+                                </div>
                                 <div className='username'> Admin</div>
                                 <div className='shuxian'/>
                                 <div className='loginquit'><span onClick={() => this.quit(true)}
@@ -390,9 +405,9 @@ export default class Homepage extends Component {
                         : this.state.nosearch
                             ?
                             <PopupWindow oneselect={1} title='Selected' content='Please select project and language .'
-                                          fun={() => {
-                                              this.selectedone(true)
-                                          }} surebutton='I konwn'/>
+                                         fun={() => {
+                                             this.selectedone(true)
+                                         }} surebutton='I konwn'/>
                             : null}
                     <div className='homepageUI'>
                         <div className='object_location'>
@@ -402,17 +417,9 @@ export default class Homepage extends Component {
                                         id="standard-select-currency"
                                         select
                                         label="ProjectId"
-                                        // className={classes.textField}
                                         value={this.state.project_select || 'null'}
                                         onChange={this.changejectselect}
-                                        // SelectProps={{
-                                        //     MenuProps: {
-                                        //         className: classes.menu,
-                                        //     },
-                                        // }}
-
                                         margin="normal"
-                                        // variant="outlined"
                                     >
                                         {this.state.result.map(option => (
                                             <MenuItem key={option.id} value={option.id}>
@@ -422,61 +429,69 @@ export default class Homepage extends Component {
                                     </MySelect>
                                 </div>
                                 : null}
+                            <div className='languageUI'>
+                                <div className='selectone'><label/></div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_all' value='all'
+                                                                     onChange={e => this.change_language_select(e)}
+                                                                     checked={this.state.language_type.includes('all')}
+                                /><label>All</label></div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_en' value='en'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>English</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_es' value='es'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('es')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>Spanish</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ko'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>Korean</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ja'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ja')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>Japanese</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='sk'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('sk')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>French</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='cs'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('cs')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>Czech</label>
+                                </div>
+                                <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='fr'
+                                                                     checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('fr')}
+                                                                     onChange={e => this.change_language_select(e)}/><label>French</label>
+                                </div>
+                            </div>
+                            <div className='searchinput'>
+                                <MyTextField
+                                    onKeyUp={e => this.search(e)}
+                                    id="outlined-search"
+                                    label="Search field"
+                                    type="search"
+                                    margin="dense"
+                                    variant="outlined"
+                                    onChange={(search) => this.changeSearch(search)}
+                                />
+                            </div>
+                            <div className='searchclick'>
+                                <Button fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => this.submitSearch()}>
+                                    Search
+                                </Button>
+                            </div>
                         </div>
                     </div>
                     <div className='selectlanguage'>
-                        <div className='languageUI'>
-                            <div className='selectone'><label/></div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_all' value='all'
-                                                                 onChange={e => this.change_language_select(e)}
-                                                                 checked={this.state.language_type.includes('all')}
-                            /><label>All</label></div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_en' value='en'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('en')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>English</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_es' value='es'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('es')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>Spanish</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ko'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ko')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>Korean</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='ja'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('ja')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>Japanese</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='sk'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('sk')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>French</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='cs'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('cs')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>Czech</label>
-                            </div>
-                            <div className='selectone'><Checkbox type='checkbox' name='lanuage_ko' value='fr'
-                                                                 checked={findlanguage(this.state.language_type, 'all') || this.state.language_type.includes('fr')}
-                                                                 onChange={e => this.change_language_select(e)}/><label>French</label>
-                            </div>
-                        </div>
-                        <div className='searchinput'>
-                            <MyTextField
-                                onKeyUp={e => this.search(e)}
-                                id="outlined-search"
-                                label="Search field"
-                                type="search"
-                                margin="dense"
-                                variant="outlined"
-                                onChange={(search) => this.changeSearch(search)}
-                            />
-                        </div>
-                        <div className='searchclick'>
+                        <div className="addlanguage">
                             <Button fullWidth
                                     variant="contained"
                                     color="primary"
-                                    onClick={() => this.submitSearch()}>
-                                Search
+                                    onClick={() => this.addlanguage(true)}>
+                                Add Language
                             </Button>
                         </div>
                     </div>
@@ -582,7 +597,7 @@ export default class Homepage extends Component {
                                                 <td className='width_edit'>
                                                     <div className='edit'
                                                          onClick={() => this.editon(true, item_content.id)}><img
-                                                        src={require('./images/edit.png')} alt={""}/></div>
+                                                        src={require('./images/edit.png')} alt="edit language"/></div>
                                                 </td>
                                             </tr>
                                         ))}
@@ -608,6 +623,9 @@ export default class Homepage extends Component {
                         <EditWindow fun={this.editon} title='Edit language' language_type={this.state.language_type}
                                     submit={this.submit}
                                     content={this.state.result_message} id={this.state.id}/> : null}
+                    {this.state.addlanguage ?
+                        <AddLanguage fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
+                    }
                 </div>
         )
     }

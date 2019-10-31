@@ -91,7 +91,7 @@ export default function Login() {
     const [result, setresult] = useState(null);
     const [error, seterror] = useState(null);
     const [loginsuccess_statu, setloginsuccess_statu] = useState(false);
-    const [loginsuccess_time, setloginsuccess_time] = useState(2);
+    const [loginsuccess_time, setloginsuccess_time] = useState(3);
     const [username, setusername] = useState(null);
     const [password, setpassword] = useState(null);
     const classes = useStyles();
@@ -100,7 +100,7 @@ export default function Login() {
         setresult(null);
         seterror(null);
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://192.168.1.112:4000/graphql',
         });
         client.query({
             query: gql`
@@ -124,7 +124,7 @@ export default function Login() {
     }
 
     if (result) {
-        setTimeout(() => setloginsuccess_statu(true), 2000);
+        setTimeout(() => setloginsuccess_statu(true), 3000);
         setInterval((timeout) => timeout = setloginsuccess_time(loginsuccess_time > 0 ? loginsuccess_time - 1 : clearInterval(timeout)), 1000)
     }
 
