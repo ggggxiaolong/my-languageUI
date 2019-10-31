@@ -87,7 +87,7 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
 }
 
 export default function Login() {
-    const [message, setmessage] = useState(0);
+    // const [message, setmessage] = useState(0);
     const [result, setresult] = useState(null);
     const [error, seterror] = useState(null);
     const [loginsuccess_statu, setloginsuccess_statu] = useState(false);

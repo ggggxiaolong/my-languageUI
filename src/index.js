@@ -4,7 +4,7 @@ import './index.css';
 import Login from './login_page';
 import Homepage from './homePage'
 import * as serviceWorker from './serviceWorker';
-import {HashRouter as Router,Link,Redirect,Route,Switch} from 'react-router-dom'
+import {HashRouter as Router,Redirect,Route,Switch} from 'react-router-dom'
 import 'typeface-roboto';
 ReactDOM.render(
     <Router>
@@ -13,13 +13,6 @@ ReactDOM.render(
         <Route path="/homePage" component={Homepage}/>
         <Redirect to="/login" />
         </Switch>
-    </Router>,document.getElementById('login')
+    </Router>,document.getElementById('body')
 );
-
-
-
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

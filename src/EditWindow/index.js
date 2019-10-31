@@ -42,11 +42,13 @@ export default function EditWindow({title, fun, language_type, submit, content, 
         contentnew[0]["new_" + languagetype] = newlanguage;
         setifModify(false);
     }
+
     function onKeyDown(e) {
-        if (e.keyCode === 13){
+        if (e.keyCode === 13) {
             enternewlanguage()
         }
     }
+
     return (
         <div>
             <Dialog
@@ -61,59 +63,62 @@ export default function EditWindow({title, fun, language_type, submit, content, 
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 {!ifModify ? <div>
                         {contentnew.map(item =>
-                            <div className='contentlanguage'>
-                                {languagetype_old.includes('en') ? <p>
-                                    <span><b>en: </b>{item.en === null ? 'NULL' : item.en}</span>&nbsp;&nbsp;<a
-                                    className='modify_button'
-                                    onClick={() => setModify(item.id, 'en')}>Modify</a>
-                                </p> : null}
+                            <div key={item.id} className='contentlanguage'>
+                                {languagetype_old.includes('en')
+                                    ?
+                                    <p>
+                                        <span><b>en: </b>{item.en === null ? 'NULL' : item.en}</span>&nbsp;&nbsp;<button
+                                        className='modify_button'
+                                        onClick={() => setModify(item.id, 'en')}>Modify</button>
+                                    </p>
+                                    : null}
                                 {languagetype_old.includes('en') ? item.new_en ? <p>
                                     <span><b>new_en: </b>{item.new_en === null ? '' : item.new_en}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('es') ? <p>
-                                    <span><b>es: </b>{item.es === null ? 'NULL' : item.es}</span>&nbsp;&nbsp;<a
+                                    <span><b>es: </b>{item.es === null ? 'NULL' : item.es}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'es')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'es')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('es') ? item.new_es ? <p>
                                     <span><b>new_es: </b>{item.new_es === null ? '' : item.new_es}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('ko') ? <p>
-                                    <span><b>ko: </b>{item.ko === null ? 'NULL' : item.ko}</span>&nbsp;&nbsp;<a
+                                    <span><b>ko: </b>{item.ko === null ? 'NULL' : item.ko}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'ko')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'ko')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('ko') ? item.new_ko ? <p>
                                     <span><b>new_ko: </b>{item.new_ko === null ? '' : item.new_ko}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('ja') ? <p>
-                                    <span><b>ja: </b>{item.ja === null ? 'NULL' : item.ja}</span>&nbsp;&nbsp;<a
+                                    <span><b>ja: </b>{item.ja === null ? 'NULL' : item.ja}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'ja')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'ja')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('ja') ? item.new_ja ? <p>
                                     <span><b>new_ja: </b>{item.new_ja === null ? '' : item.new_ja}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('sk') ? <p>
-                                    <span><b>sk: </b>{item.sk === null ? 'NULL' : item.sk}</span>&nbsp;&nbsp;<a
+                                    <span><b>sk: </b>{item.sk === null ? 'NULL' : item.sk}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'sk')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'sk')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('sk') ? item.new_sk ? <p>
                                     <span><b>new_sk: </b>{item.new_sk === null ? '' : item.new_sk}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('cs') ? <p>
-                                    <span><b>cs: </b>{item.cs === null ? 'NULL' : item.cs}</span>&nbsp;&nbsp;<a
+                                    <span><b>cs: </b>{item.cs === null ? 'NULL' : item.cs}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'cs')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'cs')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('cs') ? item.new_cs ? <p>
                                     <span><b>new_cs: </b>{item.new_cs === null ? '' : item.new_cs}</span>
                                 </p> : null : null}
                                 {languagetype_old.includes('fr') ? <p>
-                                    <span><b>fr: </b>{item.fr === null ? 'NULL' : item.fr}</span>&nbsp;&nbsp;<a
+                                    <span><b>fr: </b>{item.fr === null ? 'NULL' : item.fr}</span>&nbsp;&nbsp;<button
                                     className='modify_button'
-                                    onClick={() => setModify(item.id, 'fr')}>Modify</a>
+                                    onClick={() => setModify(item.id, 'fr')}>Modify</button>
                                 </p> : null}
                                 {languagetype_old.includes('fr') ? item.new_fr ? <p>
                                     <span><b>new_fr: </b>{item.new_fr === null ? '' : item.new_fr}</span>

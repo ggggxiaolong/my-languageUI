@@ -12,8 +12,17 @@
     height: 200%;
 }
 .modify_button{
-    cursor: pointer;
     color: #ff6e1f;
+    background-color: white;
+    border:0;
+    outline: none;
+}
+.modify_button:hover{
+    cursor: pointer;
+    color: #9f4b18;
+    background-color: white;
+    border:0;
+    outline: none;
 }
 .editwindow{
     position: relative;
