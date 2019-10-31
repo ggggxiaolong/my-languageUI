@@ -118,13 +118,28 @@ export default class Homepage extends Component {
 
         } else {
             if (event.target.value === 'all') {
-                array.push('en');
-                array.push('es');
-                array.push('ko');
-                array.push('ja');
-                array.push('sk');
-                array.push('cs');
-                array.push('fr');
+                if (!findlanguage(array,'en')) {
+                    array.push('en');
+                }
+                if (!findlanguage(array,'es')) {
+                    array.push('es');
+                }
+                if (!findlanguage(array,'ko')) {
+                    array.push('ko');
+                }
+                if (!findlanguage(array,'ja')) {
+                    array.push('ja');
+                }
+                if (!findlanguage(array,'sk')) {
+                    array.push('sk');
+                }
+                if (!findlanguage(array,'cs')) {
+                    array.push('cs');
+                }
+                if (!findlanguage(array,'fr')) {
+                    array.push('fr');
+                }
+
             }
             array.push(event.target.value);
             if (array.length === 8) {
@@ -307,13 +322,13 @@ export default class Homepage extends Component {
         client.mutate({
             mutation: gql`mutation test{
                    updateLang(lang:{id:${contentnew[0].id},
-                    en:"${contentnew[0].new_en === null ? '':contentnew[0].new_en}",
-                    es:"${contentnew[0].new_es === null ? '':contentnew[0].new_es}",
-                    ko:"${contentnew[0].new_ko === null ? '':contentnew[0].new_ko}",
-                    ja:"${contentnew[0].new_ja === null ? '':contentnew[0].new_ja}",
-                    sk:"${contentnew[0].new_sk === null ? '':contentnew[0].new_sk}",
-                    cs:"${contentnew[0].new_cs === null ? '':contentnew[0].new_cs}",
-                    fr:"${contentnew[0].new_fr === null ? '':contentnew[0].new_fr}"})
+                    en:"${contentnew[0].new_en === null ? '' : contentnew[0].new_en}",
+                    es:"${contentnew[0].new_es === null ? '' : contentnew[0].new_es}",
+                    ko:"${contentnew[0].new_ko === null ? '' : contentnew[0].new_ko}",
+                    ja:"${contentnew[0].new_ja === null ? '' : contentnew[0].new_ja}",
+                    sk:"${contentnew[0].new_sk === null ? '' : contentnew[0].new_sk}",
+                    cs:"${contentnew[0].new_cs === null ? '' : contentnew[0].new_cs}",
+                    fr:"${contentnew[0].new_fr === null ? '' : contentnew[0].new_fr}"})
                     {
                          id
                     }
@@ -330,16 +345,19 @@ export default class Homepage extends Component {
         contentold[0].new_cs = contentnew[0].new_cs;
         contentold[0].new_fr = contentnew[0].new_fr;
     };
-    ifreponsesuccess(reponse){
-        if (reponse){
-            this.setState({editwindow:false})
+
+    ifreponsesuccess(reponse) {
+        if (reponse) {
+            this.setState({editwindow: false})
         }
     }
-    search(e){
-        if (e.keyCode === 13){
+
+    search(e) {
+        if (e.keyCode === 13) {
             this.submitSearch()
         }
     }
+
     render() {
         return (
             this.state.error !== null
@@ -587,9 +605,11 @@ export default class Homepage extends Component {
                         </div>
                     }
                     {this.state.scrollY > 1000 ?
-                        <CometoTop /> : null}
-                    {this.state.editwindow ? <EditWindow fun={this.editon} title='Edit language' language_type={this.state.language_type} submit={this.submit}
-                                                         content={this.state.result_message} id={this.state.id}/> : null}
+                        <CometoTop/> : null}
+                    {this.state.editwindow ?
+                        <EditWindow fun={this.editon} title='Edit language' language_type={this.state.language_type}
+                                    submit={this.submit}
+                                    content={this.state.result_message} id={this.state.id}/> : null}
                 </div>
         )
     }
