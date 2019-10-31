@@ -4,7 +4,7 @@ import {HashRouter as Router, Redirect} from 'react-router-dom'
 import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
-import Popup_window from '../Popup window'
+import PopupWindow from '../Popup window'
 import EditWindow from '../EditWindow'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -363,7 +363,7 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login'
+                        <PopupWindow top={this.state.scrollY} oneselect={1} surebutton='Login'
                                       title='Login timeout'
                                       content='Login has expired, please login again .' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
@@ -386,10 +386,10 @@ export default class Homepage extends Component {
                             ?
                             <Router><Redirect to="/login"/></Router>
                             :
-                            <Popup_window title='Log out' content='Are you sure you want to log out ?' fun={this.quit}/>
+                            <PopupWindow title='Log out' content='Are you sure you want to log out ?' fun={this.quit}/>
                         : this.state.nosearch
                             ?
-                            <Popup_window oneselect={1} title='Selected' content='Please select project and language .'
+                            <PopupWindow oneselect={1} title='Selected' content='Please select project and language .'
                                           fun={() => {
                                               this.selectedone(true)
                                           }} surebutton='I konwn'/>
@@ -426,7 +426,7 @@ export default class Homepage extends Component {
                     </div>
                     <div className='selectlanguage'>
                         <div className='languageUI'>
-                            <div className='selectone'><label></label></div>
+                            <div className='selectone'><label/></div>
                             <div className='selectone'><Checkbox type='checkbox' name='lanuage_all' value='all'
                                                                  onChange={e => this.change_language_select(e)}
                                                                  checked={this.state.language_type.includes('all')}
@@ -582,7 +582,7 @@ export default class Homepage extends Component {
                                                 <td className='width_edit'>
                                                     <div className='edit'
                                                          onClick={() => this.editon(true, item_content.id)}><img
-                                                        src={require('./images/edit.png')}/></div>
+                                                        src={require('./images/edit.png')} alt={""}/></div>
                                                 </td>
                                             </tr>
                                         ))}
