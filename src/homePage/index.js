@@ -13,10 +13,6 @@ import {styled} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import CometoTop from '../CometoTop'
-import {useApolloClient, useMutation} from '@apollo/react-hooks';
-
-// import gql  from 'graphql-tag';
-
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] === val) {
