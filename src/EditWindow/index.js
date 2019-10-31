@@ -25,7 +25,7 @@ export default function EditWindow({title, fun, language_type, submit, content, 
     const [ifModify, setifModify] = useState(false);
     const [languagetype, setlanguagetype] = useState(null);
     const [newlanguage, setnewlanguage] = useState(null);
-    const [contentnew, setcontentnew] = useState(contentnew_one);
+    const [contentnew] = useState(contentnew_one);
 
     function setModify(id, name) {
         setifModify(true);

@@ -1,16 +1,13 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
-import {any} from "prop-types";
-import {HashRouter as Router, Redirect, Route} from 'react-router-dom'
+import {HashRouter as Router, Redirect} from 'react-router-dom'
 import cookie from 'react-cookies'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';

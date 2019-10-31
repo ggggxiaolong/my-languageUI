@@ -13,6 +13,7 @@ import {styled} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import CometoTop from '../CometoTop'
+
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
         if (arr[i] === val) {
@@ -114,25 +115,25 @@ export default class Homepage extends Component {
 
         } else {
             if (event.target.value === 'all') {
-                if (!findlanguage(array,'en')) {
+                if (!findlanguage(array, 'en')) {
                     array.push('en');
                 }
-                if (!findlanguage(array,'es')) {
+                if (!findlanguage(array, 'es')) {
                     array.push('es');
                 }
-                if (!findlanguage(array,'ko')) {
+                if (!findlanguage(array, 'ko')) {
                     array.push('ko');
                 }
-                if (!findlanguage(array,'ja')) {
+                if (!findlanguage(array, 'ja')) {
                     array.push('ja');
                 }
-                if (!findlanguage(array,'sk')) {
+                if (!findlanguage(array, 'sk')) {
                     array.push('sk');
                 }
-                if (!findlanguage(array,'cs')) {
+                if (!findlanguage(array, 'cs')) {
                     array.push('cs');
                 }
-                if (!findlanguage(array,'fr')) {
+                if (!findlanguage(array, 'fr')) {
                     array.push('fr');
                 }
 
@@ -208,7 +209,7 @@ export default class Homepage extends Component {
         this.setState({languageinclude: languageinclude, page: 1});
         let param = 'project_id';
         if (paramfrom.includes('all')) {
-            param = "en" + " " + "es" + " " + "ko" + " " + "ja" + " " + "sk" + " " + "cs" + " " + "fr"
+            param = "en es ko ja sk cs fr"
         } else if (paramfrom.length > 1) {
             param = "";
             for (let i = 0; i < paramfrom.length; i++) {
@@ -237,14 +238,14 @@ export default class Homepage extends Component {
                 ifMore: reponse.data.language.length === 25
             }))
             .catch(error => this.setState({error: error.message}))
-        const content = this.state.result_message;
+        // const content = this.state.result_message;
     }
 
     LetMore() {
         const paramfrom = this.state.language_type;
         let param = 'project_id';
         if (paramfrom.includes('all')) {
-            param = "en" + " " + "es" + " " + "ko" + " " + "ja" + " " + "sk" + " " + "cs" + " " + "fr"
+            param = "en es ko ja sk cs fr"
         } else if (paramfrom.length > 1) {
             param = "";
             for (let i = 0; i < paramfrom.length; i++) {
@@ -362,8 +363,11 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login' title='Login timeout'
-                                      content='Login has expired, please login again .' fun={this.setloginforward}/>
+                        <div>
+                            <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login'
+                                          title='Login timeout'
+                                          content='Login has expired, please login again .' fun={this.setloginforward}/>
+                        </div>
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
