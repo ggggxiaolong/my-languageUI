@@ -363,11 +363,9 @@ export default class Homepage extends Component {
                     ?
                     !this.state.iflogin_forward
                         ?
-                        <div>
-                            <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login'
-                                          title='Login timeout'
-                                          content='Login has expired, please login again .' fun={this.setloginforward}/>
-                        </div>
+                        <Popup_window top={this.state.scrollY} oneselect={1} surebutton='Login'
+                                      title='Login timeout'
+                                      content='Login has expired, please login again .' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
                     : alert(this.state.error)
                 : <div className='homepage'>
