@@ -370,6 +370,7 @@ export default class Homepage extends Component {
 
     }
     render() {
+        console.log(this.state.result);
         return (
             this.state.error !== null
                 ?
@@ -625,7 +626,7 @@ export default class Homepage extends Component {
                                     submit={this.submit}
                                     content={this.state.result_message} id={this.state.id}/> : null}
                     {this.state.addlanguage ?
-                        <AddLanguage projectid={this.state.project_select} fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
+                        <AddLanguage projectfrom={this.state.project_select} fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
                     }
                 </div>
         )
