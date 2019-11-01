@@ -295,6 +295,7 @@ export default class Homepage extends Component {
 
     changeSearch(search) {
         search = search.target.value;
+        search = search.replace('\\','\\\\');
         if (search === '') {
             this.setState({search: null})
         } else {
