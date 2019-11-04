@@ -55,13 +55,34 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
     const [tosubmit, settosubmit] = useState(false);
     const [result, setresult] = useState(null);
 
-    function Changelanguage(value) {
+    function ChangeEnglish(value) {
         setEnglish(value.target.value);
+    }
+
+    function Changelanguage(value, type) {
+        const transResultResult = JSON.parse(JSON.stringify(transResult));
+        if (type === 'en') {
+            setEnglish(value.target.value);
+            transResultResult.data.trans.en = value.target.value
+
+        }else if (type === 'es'){
+            transResultResult.data.trans.es = value.target.value
+        } else if (type === 'ja'){
+            transResultResult.data.trans.ja = value.target.value
+        } else if (type === 'ko'){
+            transResultResult.data.trans.ko = value.target.value
+        } else if (type === 'sk'){
+            transResultResult.data.trans.sk = value.target.value
+        } else if (type === 'cs'){
+            transResultResult.data.trans.cs = value.target.value
+        } else if (type === 'fr'){
+            transResultResult.data.trans.fr = value.target.value
+        }
+        settransResult(transResultResult)
     }
 
     function settoSubmitResult(result) {
         settransResult(result);
-        console.log(result.data.trans.es);
         settosubmit(true)
     }
 
@@ -154,70 +175,63 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
                     <div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
+                                <InputLabel>English:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'en')}
+                                    onChange={value => Changelanguage(value, 'en')}
                                     value={English}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">Spanish:</InputLabel>
+                                <InputLabel>Spanish:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'es')}
+                                    onChange={value => Changelanguage(value, 'es')}
                                     value={transResult.data.trans.es}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">Korean:</InputLabel>
+                                <InputLabel>Korean:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'ko')}
+                                    onChange={value => Changelanguage(value, 'ko')}
                                     value={transResult.data.trans.ko}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">Japanese:</InputLabel>
+                                <InputLabel>Japanese:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'ja')}
+                                    onChange={value => Changelanguage(value, 'ja')}
                                     value={transResult.data.trans.ja}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">French:</InputLabel>
+                                <InputLabel>French:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'sk')}
+                                    onChange={value => Changelanguage(value, 'sk')}
                                     value={transResult.data.trans.sk}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">Czech:</InputLabel>
+                                <InputLabel>Czech:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'cs')}
+                                    onChange={value => Changelanguage(value, 'cs')}
                                     value={transResult.data.trans.cs}
                                 />
                             </FormControl>
                         </div>
                         <div className='editwindow_input'>
                             <FormControl fullWidth className={classes.margin}>
-                                <InputLabel htmlFor="standard-adornment-amount">FrenchSearch:</InputLabel>
+                                <InputLabel>FrenchSearch:</InputLabel>
                                 <Input
-                                    id="standard-adornment-amount"
-                                    onChange={value => Changelanguage(value,'fr')}
+                                    onChange={value => Changelanguage(value, 'fr')}
                                     value={transResult.data.trans.fr}
                                 />
                             </FormControl>
@@ -225,10 +239,9 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
                     </div>
                     : <div className='editwindow_input'>
                         <FormControl fullWidth className={classes.margin}>
-                            <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
+                            <InputLabel>English:</InputLabel>
                             <Input
-                                id="standard-adornment-amount"
-                                onChange={value => Changelanguage(value,'en')}
+                                onChange={value => ChangeEnglish(value)}
                                 value={English}
                             />
                         </FormControl>
@@ -252,7 +265,8 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
                         </MyButton>
                     </DialogActions>}
             </Dialog>
-            : <PopupWindow title='successfull' content='Successful submission of information' oneselect={1} surebutton='I know' fun={() => fun(false)}/>
+            : <PopupWindow title='successfull' content='Successful submission of information' oneselect={1}
+                           surebutton='I know' fun={() => fun(false)}/>
         }
         </div>
 
