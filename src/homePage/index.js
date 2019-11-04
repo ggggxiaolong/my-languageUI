@@ -533,7 +533,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('en') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p>{item_content.en === null ? 'NULL' : item_content.en}</p>
+                                                            <p>{item_content.en === null ? 'No content' : item_content.en}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_en !== null ? item_content.new_en : null}</p>
@@ -542,7 +542,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('es') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p> {item_content.es === null ? 'NULL' : item_content.es}</p>
+                                                            <p> {item_content.es === null ? 'No content' : item_content.es}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_es !== null ? item_content.new_es : null}</p>
@@ -551,7 +551,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('ko') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p> {item_content.ko === null ? 'NULL' : item_content.ko}</p>
+                                                            <p> {item_content.ko === null ? 'No content' : item_content.ko}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_ko !== null ? item_content.new_ko : null}</p>
@@ -560,7 +560,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('ja') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p>{item_content.ja === null ? 'NULL' : item_content.ja}</p>
+                                                            <p>{item_content.ja === null ? 'No content' : item_content.ja}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_ja !== null ? item_content.new_ja : null}</p>
@@ -570,7 +570,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('sk') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p>{item_content.sk === null ? 'NULL' : item_content.sk}</p>
+                                                            <p>{item_content.sk === null ? 'No content' : item_content.sk}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_sk !== null ? item_content.new_sk : null}</p>
@@ -579,7 +579,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('cs') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p>{item_content.cs === null ? 'NULL' : item_content.cs}</p>
+                                                            <p>{item_content.cs === null ? 'No content' : item_content.cs}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_cs !== null ? item_content.new_cs : null}</p>
@@ -588,7 +588,7 @@ export default class Homepage extends Component {
                                                 {this.state.languageinclude && this.state.languageinclude.includes('fr') ?
                                                     <td className='width'>
                                                         <div>
-                                                            <p>{item_content.fr === null ? 'NULL' : item_content.fr}</p>
+                                                            <p>{item_content.fr === null ? 'No content' : item_content.fr}</p>
                                                         </div>
                                                         <div>
                                                             <p className='contentcolor'>{item_content.new_fr !== null ? item_content.new_fr : null}</p>

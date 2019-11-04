@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import './AddLanguage.css'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -49,11 +50,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function EditWindow({title, fun, projectfrom, seterror}) {
     const classes = useStyles();
-    const [English, setEnglish] = useState(null);
+    const [English, setEnglish] = useState('');
     const [projectId, setprojectId] = useState(projectfrom);
     const [transResult, settransResult] = useState(null);
     const [tosubmit, settosubmit] = useState(false);
     const [result, setresult] = useState(null);
+    const [nullable, setnullable] = useState(false);
 
     function ChangeEnglish(value) {
         setEnglish(value.target.value);
@@ -65,17 +67,17 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
             setEnglish(value.target.value);
             transResultResult.data.trans.en = value.target.value
 
-        }else if (type === 'es'){
+        } else if (type === 'es') {
             transResultResult.data.trans.es = value.target.value
-        } else if (type === 'ja'){
+        } else if (type === 'ja') {
             transResultResult.data.trans.ja = value.target.value
-        } else if (type === 'ko'){
+        } else if (type === 'ko') {
             transResultResult.data.trans.ko = value.target.value
-        } else if (type === 'sk'){
+        } else if (type === 'sk') {
             transResultResult.data.trans.sk = value.target.value
-        } else if (type === 'cs'){
+        } else if (type === 'cs') {
             transResultResult.data.trans.cs = value.target.value
-        } else if (type === 'fr'){
+        } else if (type === 'fr') {
             transResultResult.data.trans.fr = value.target.value
         }
         settransResult(transResultResult)
@@ -123,6 +125,12 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
     }
 
     function EnglishOK() {
+        if (projectId === null) {
+            setnullable(true);
+            return
+        }else {
+            setnullable(false)
+        }
         const client = new ApolloClient({
             uri: 'http://192.168.1.112:4000/graphql',
             headers: {
@@ -170,6 +178,9 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
                             </MenuItem>
                         ))}
                     </MySelect>
+                    {nullable ? <div className="nullable">
+                        <span>Not nullable</span>
+                    </div> : null}
                 </div>
                 {tosubmit ?
                     <div>
