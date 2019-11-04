@@ -52,7 +52,7 @@ export default class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project_select: null,
+            project_select: 1,
             result: null,
             error: null,
             iflogin_forward: false,

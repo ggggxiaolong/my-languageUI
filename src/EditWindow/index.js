@@ -142,13 +142,13 @@ export default function EditWindow({title, fun, language_type, submit, content, 
                     </div>
                     : <div>
                         <div className='editwindow_content'>
-                            {languagetype === 'en' ? contentnew[0].en === null ? 'English: ' + '' : 'English: ' + contentnew[0].en
-                                : languagetype === 'es' ? contentnew[0].es === null ? 'Spanish: ' + '' : 'Spanish: ' + contentnew[0].es
-                                    : languagetype === 'ko' ? contentnew[0].ko === null ? 'Korean: ' + '' : 'Korean: ' + contentnew[0].ko
-                                        : languagetype === 'ja' ? contentnew[0].ja === null ? 'Japanese: ' + '' : 'Japanese: ' + contentnew[0].ja
-                                            : languagetype === 'sk' ? contentnew[0].sk === null ? 'French: ' + '' : 'French: ' + contentnew[0].sk
-                                                : languagetype === 'cs' ? contentnew[0].cs === null ? 'Czech: ' + '' : 'Czech: ' + contentnew[0].cs
-                                                    : languagetype === 'fr' ? contentnew[0].fr === null ? 'FrenchSearch: ' + '' : 'FrenchSearch: ' + contentnew[0].fr
+                            {languagetype === 'en' ? contentnew[0].en === null ? 'English: ' : 'English: ' + contentnew[0].en
+                                : languagetype === 'es' ? contentnew[0].es === null ? 'Spanish: ' : 'Spanish: ' + contentnew[0].es
+                                    : languagetype === 'ko' ? contentnew[0].ko === null ? 'Korean: ' : 'Korean: ' + contentnew[0].ko
+                                        : languagetype === 'ja' ? contentnew[0].ja === null ? 'Japanese: ' : 'Japanese: ' + contentnew[0].ja
+                                            : languagetype === 'sk' ? contentnew[0].sk === null ? 'French: ' : 'French: ' + contentnew[0].sk
+                                                : languagetype === 'cs' ? contentnew[0].cs === null ? 'Czech: ' : 'Czech: ' + contentnew[0].cs
+                                                    : languagetype === 'fr' ? contentnew[0].fr === null ? 'FrenchSearch: ' : 'FrenchSearch: ' + contentnew[0].fr
                                                         : null}
                         </div>
                         <div className='editwindow_input'>
