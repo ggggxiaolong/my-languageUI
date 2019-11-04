@@ -23,9 +23,10 @@ export default function Popup_window({title, content, fun, surebutton, oneselect
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {oneselect === 1 ? null : <Button onClick={() => fun(false)} color="primary">
-                        Disagree
-                    </Button>}
+                    {oneselect === 1 ? null :
+                        <Button onClick={() => fun(false)} color="primary">
+                            Disagree
+                        </Button>}
                     <Button onClick={() => fun('sure')} color="primary" autoFocus>
                         {surebutton || 'Agree'}
                     </Button>

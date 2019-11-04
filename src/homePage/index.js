@@ -367,11 +367,8 @@ export default class Homepage extends Component {
             this.setState({addlanguage: true})
         }
     }
-    addlanguagesubmit(){
-
-    }
     render() {
-        console.log(this.state.result);
+        const seterror = (error) => this.setState({error: error.message});
         return (
             this.state.error !== null
                 ?
@@ -390,7 +387,7 @@ export default class Homepage extends Component {
                             <div className='Logo'><span><b>TappLock</b></span></div>
                             <div className='personal'>
                                 <div className='personalimage'><img src={require('./images/admin.png')}
-                                                                    alt="user's picture"/>
+                                                                    alt=""/>
                                 </div>
                                 <div className='username'> Admin</div>
                                 <div className='shuxian'/>
@@ -627,7 +624,8 @@ export default class Homepage extends Component {
                                     submit={this.submit}
                                     content={this.state.result_message} id={this.state.id}/> : null}
                     {this.state.addlanguage ?
-                        <AddLanguage projectfrom={this.state.project_select} fun={this.addlanguage} title='Add Language' submit={this.addlanguagesubmit()}/> : null
+                        <AddLanguage projectfrom={this.state.project_select} fun={this.addlanguage} title='Add Language' top={this.state.scrollY}
+                                     gologin={this.setloginforward} seterror={seterror}/> : null
                     }
                 </div>
         )

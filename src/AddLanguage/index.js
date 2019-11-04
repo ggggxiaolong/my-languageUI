@@ -8,13 +8,13 @@ import {styled} from '@material-ui/core/styles';
 import {makeStyles} from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
 import cookie from 'react-cookies'
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import PopupWindow from '../Popup window'
 
 const MySelect = styled(TextField)({
     margin: 0,
@@ -47,15 +47,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function EditWindow({title, fun, submit, projectfrom}) {
+export default function EditWindow({title, fun, projectfrom, seterror}) {
     const classes = useStyles();
-    const [error,seterror] = useState(null);
     const [English, setEnglish] = useState(null);
     const [projectId, setprojectId] = useState(projectfrom);
-    const [transResult,settransResult] = useState(null);
+    const [transResult, settransResult] = useState(null);
+    const [tosubmit, settosubmit] = useState(false);
+    const [result, setresult] = useState(null);
 
-    function ChangeEnglish(value) {
+    function Changelanguage(value) {
         setEnglish(value.target.value);
+    }
+
+    function settoSubmitResult(result) {
+        settransResult(result);
+        console.log(result.data.trans.es);
+        settosubmit(true)
+    }
+
+    function finallResult(result) {
+        if (result.data.addLang.en === English) {
+            setresult('submitted')
+        }
     }
 
     function EnglishSubmit() {
@@ -84,8 +97,8 @@ export default function EditWindow({title, fun, submit, projectfrom}) {
              }
             `
         })
-            .then(result => console.log(result))
-        // .catch(error)
+            .then(result => finallResult(result))
+            .catch(error => seterror(error));
     }
 
     function EnglishOK() {
@@ -99,18 +112,19 @@ export default function EditWindow({title, fun, submit, projectfrom}) {
         client.query({
             query: gql`
            {
-              trans(en:"translage"){
+              trans(en:"${English}"){
               en es ja ko sk cs fr
               }
            }
             `
         })
-            .then(result => settransResult(result))
+            .then(result => settoSubmitResult(result))
             .catch(error => seterror(error));
     }
 
     return (
-        <div>
+        <div>{result !== 'submitted'
+            ?
             <Dialog
                 fullWidth={true}
                 TransitionComponent={Transition}
@@ -136,24 +150,110 @@ export default function EditWindow({title, fun, submit, projectfrom}) {
                         ))}
                     </MySelect>
                 </div>
-                <div className='editwindow_input'>
-                    <FormControl fullWidth className={classes.margin}>
-                        <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
-                        <Input
-                            id="standard-adornment-amount"
-                            onChange={value => ChangeEnglish(value)}
-                        />
-                    </FormControl>
-                </div>
-                <DialogActions>
-                    <MyButton onClick={() => fun(false)} color="primary">
-                        Cancel
-                    </MyButton>
-                    <MyButton onClick={() => EnglishOK()} color="primary">
-                        OK
-                    </MyButton>
-                </DialogActions>
+                {tosubmit ?
+                    <div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'en')}
+                                    value={English}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">Spanish:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'es')}
+                                    value={transResult.data.trans.es}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">Korean:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'ko')}
+                                    value={transResult.data.trans.ko}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">Japanese:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'ja')}
+                                    value={transResult.data.trans.ja}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">French:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'sk')}
+                                    value={transResult.data.trans.sk}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">Czech:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'cs')}
+                                    value={transResult.data.trans.cs}
+                                />
+                            </FormControl>
+                        </div>
+                        <div className='editwindow_input'>
+                            <FormControl fullWidth className={classes.margin}>
+                                <InputLabel htmlFor="standard-adornment-amount">FrenchSearch:</InputLabel>
+                                <Input
+                                    id="standard-adornment-amount"
+                                    onChange={value => Changelanguage(value,'fr')}
+                                    value={transResult.data.trans.fr}
+                                />
+                            </FormControl>
+                        </div>
+                    </div>
+                    : <div className='editwindow_input'>
+                        <FormControl fullWidth className={classes.margin}>
+                            <InputLabel htmlFor="standard-adornment-amount">English:</InputLabel>
+                            <Input
+                                id="standard-adornment-amount"
+                                onChange={value => Changelanguage(value,'en')}
+                                value={English}
+                            />
+                        </FormControl>
+                    </div>
+                }
+                {tosubmit ?
+                    <DialogActions>
+                        <MyButton onClick={() => settosubmit(false)} color="primary">
+                            Cancel
+                        </MyButton>
+                        <MyButton onClick={() => EnglishSubmit()} color="primary">
+                            Submit
+                        </MyButton>
+                    </DialogActions> :
+                    <DialogActions>
+                        <MyButton onClick={() => fun(false)} color="primary">
+                            Cancel
+                        </MyButton>
+                        <MyButton onClick={() => EnglishOK()} color="primary">
+                            OK
+                        </MyButton>
+                    </DialogActions>}
             </Dialog>
+            : <PopupWindow title='successfull' content='Successful submission of information' oneselect={1} surebutton='I know' fun={() => fun(false)}/>
+        }
         </div>
 
     )
