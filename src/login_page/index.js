@@ -66,7 +66,7 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
         return (
             <div className='loginresult_suc'>
                 {/*<label className="locat"></label>*/}
-                <div className="myicon-tick-checked"/>
+                <span className="myicon-tick-checked"/>
                 <span className="locat">
                 Login in {loginsuccess_time} seconds ...
                 </span>
@@ -75,7 +75,9 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
     } else if (loginfail) {
         return (
             <div className='loginresult_fail'>
+                <div className="loginstatuicon">
                 <div className="myicon-tick-worring"/>
+                </div>
                 <span className="locat">
                 Wrong account or password
                 </span>
