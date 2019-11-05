@@ -5,3 +5,11 @@
 .nullable{
     color: red;
 }
+.svgloading{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    /*background-color: #30799B;*/
+    left: 101%;
+    top: 30%;
+}

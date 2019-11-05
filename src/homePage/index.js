@@ -56,7 +56,7 @@ export default class Homepage extends Component {
             result: null,
             error: null,
             iflogin_forward: false,
-            language_type: [''],
+            language_type: ['','all','en','es','ja','cs','fr','sk','ko'],
             result_message: null,
             page: 0,
             languageinclude: null,
