@@ -60,7 +60,6 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
     const [englisherror, setenglisherror] = useState(false);
 
     function ChangeEnglish(value) {
-        console.log(testtext(value.target.value));
         if (!testtext(value.target.value)) {
             setloading(true);
             setenglisherror(true);
