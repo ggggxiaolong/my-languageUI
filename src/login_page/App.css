@@ -78,24 +78,15 @@
     left: -3%;
     /*background-color: white;*/
 }
-
-.loginresult_suc {
-    position: absolute;
+.locat_s{
+    position: relative;
     z-index: 1;
-    width: 14%;
-    height: 4%;
-    left: 43%;
-    border-radius: 5px;
-    font-size: 17px;
-    /*top: -4%;*/
-    text-align: center;
-    background-color: white;
-    box-shadow: 0 2px 4px #0b0605;
-    color: rgba(218, 0, 0, 0.63);
-    animation: tofail 500ms forwards;
-    border: 0.1px solid black;
+    top: 20%;
+    height: 100%;
+    width: 100%;
+    left: 1%;
+    /*background-color: white;*/
 }
-
 .myicon-tick-checked {
     display: inline-block;
     position: relative;
@@ -104,7 +95,7 @@
     border-radius: 50%;
     background-color: #2ac845;
     top: 23%;
-    right: 3%;
+    right: 4%;
 }
 .myicon-tick-worring {
     display: inline-block;
@@ -117,11 +108,10 @@
     /*right: 8%;*/
 }
 .loginresult_fail {
-    position: absolute;
+    position: relative;
     z-index: 1;
-    /*width: 14%;*/
-    height: 4%;
-    left: 43.5%;
+    width: 260px;
+    height: 26%;
     border-radius: 5px;
     font-size: 17px;
     /*top: -4%;*/
@@ -131,21 +121,40 @@
     color: rgba(218, 0, 0, 0.63);
     animation: tofail 500ms forwards;
     border: 0.1px solid black;
+    margin: auto;
+}
+.loginresult_suc {
+    position: relative;
+    z-index: 1;
+    width: 230px;
+    height: 26%;
+    border-radius: 5px;
+    font-size: 17px;
+    /*top: -4%;*/
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 2px 4px #0b0605;
+    color: rgba(218, 0, 0, 0.63);
+    animation: tofail 500ms forwards;
+    border: 0.1px solid black;
+    margin: auto;
 }
 @keyframes tofail {
     0%{
-        top: -14%;
+        top: -40%;
     }
     100%{
-        top: -1%;
+        top: 50%;
     }
 }
 
 .bigdiv {
     position: absolute;
-    top: 5%;
+    top: 8%;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    align-items: center;
+    /*background-color: #30799B;*/
 }
 .loginstatuicon{
     position: relative;
@@ -153,4 +162,9 @@
     width: 40px;
     top: 24%;
     left: -1%;
+}
+.loginstatu{
+    position: absolute;
+    width: 100%;
+    height: 15%;
 }

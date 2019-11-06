@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import cookie from 'react-cookies'
-import {HashRouter as Router, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect,withRouter} from 'react-router-dom'
 import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
@@ -48,7 +48,7 @@ function findlanguage(arr, val) {
     }
 }
 
-export default class Homepage extends Component {
+class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,7 +99,8 @@ export default class Homepage extends Component {
         } else {
             cookie.remove('tokenaccessToken');
             cookie.remove('refreshToken');
-            this.setState({quitsure: iftrue})
+            this.setState({quitsure: iftrue});
+            setTimeout(() => window.location.reload(), 100);
         }
     }
 
@@ -170,7 +171,8 @@ export default class Homepage extends Component {
     }
 
     setloginforward() {
-        this.setState({iflogin_forward: true})
+        this.setState({iflogin_forward: true});
+        setTimeout(() => window.location.reload(), 100);
     }
 
     handleScroll(event) {
@@ -632,3 +634,4 @@ export default class Homepage extends Component {
         )
     }
 }
+export default withRouter(Homepage)

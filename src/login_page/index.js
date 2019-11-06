@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
-import {HashRouter as Router, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, withRouter} from 'react-router-dom'
 import cookie from 'react-cookies'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -56,40 +56,39 @@ function Copyright() {
 
 function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, loginsuccess_time}) {
     if (loginsuccess_statu) {
-        return (<Router>
+        return <Router>
             <Redirect to="/homePage"/>
-        </Router>)
-    }
-    if (loginsuccess) {
-        cookie.save('tokenaccessToken', loginsuccess.data.login.accessToken);
-        cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
-        return (
-            <div className='loginresult_suc'>
-                {/*<label className="locat"></label>*/}
-                <span className="myicon-tick-checked"/>
-                <span className="locat">
-                Login in {loginsuccess_time} seconds ...
-                </span>
-            </div>)
-
-    } else if (loginfail) {
-        return (
-            <div className='loginresult_fail'>
-                <div className="loginstatuicon">
-                <div className="myicon-tick-worring"/>
-                </div>
-                <span className="locat">
-                Wrong account or password
-                </span>
-            </div>
-        )
-    } else {
-        return <label/>;
-    }
+        </Router>;
 }
 
-export default function Login() {
-    // const [message, setmessage] = useState(0);
+if (loginsuccess) {
+    cookie.save('tokenaccessToken', loginsuccess.data.login.accessToken);
+    cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
+    return (
+        <div className='loginresult_suc'>
+            <span className="myicon-tick-checked"/>
+            <span className="locat_s">
+                Login in {loginsuccess_time} seconds ...
+                </span>
+        </div>)
+
+} else if (loginfail) {
+    return (
+        <div className='loginresult_fail'>
+            <div className="loginstatuicon">
+                <div className="myicon-tick-worring"/>
+            </div>
+            <span className="locat">
+                Wrong account or password
+                </span>
+        </div>
+    )
+} else {
+    return <label/>;
+}
+}
+
+function Login() {
     const [result, setresult] = useState(null);
     const [error, seterror] = useState(null);
     const [loginsuccess_statu, setloginsuccess_statu] = useState(false);
@@ -127,6 +126,7 @@ export default function Login() {
 
     if (result) {
         setTimeout(() => setloginsuccess_statu(true), 3000);
+        setTimeout(() => window.location.reload(), 3100);
         setInterval((timeout) => timeout = setloginsuccess_time(loginsuccess_time > 0 ? loginsuccess_time - 1 : clearInterval(timeout)), 1000)
     }
 
@@ -136,10 +136,14 @@ export default function Login() {
         }
     }
 
-    return (<div onKeyUp={(e) => onKeyup(e)} className='bigdiv'>
+    return (
+        <div>
+        <div className="loginstatu">
             <Loginresult loginsuccess={result} loginfail={error}
                          loginsuccess_statu={loginsuccess_statu}
-                         loginsuccess_time={loginsuccess_time}/>
+                         loginsuccess_time={loginsuccess_time} referce={seterror}/>
+        </div>
+        <div onKeyUp={(e) => onKeyup(e)} className='bigdiv'>
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
@@ -193,8 +197,11 @@ export default function Login() {
                 </Box>
             </Container>
         </div>
+        </div>
     )
 }
+
+export default withRouter(Login)
 // export function Loginresult({className}) {
 //         return (
 //             <div className={className}>
