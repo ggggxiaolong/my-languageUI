@@ -180,6 +180,7 @@ export default class Homepage extends Component {
     componentDidMount() {
         this.projectselect();
         window.addEventListener('scroll', this.handleScroll);
+        this.submitSearch()
     }
 
     submitSearch() {
