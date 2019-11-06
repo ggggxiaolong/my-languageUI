@@ -57,9 +57,28 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
     const [result, setresult] = useState(null);
     const [nullable, setnullable] = useState(false);
     const [loading, setloading] = useState(false);
+    const [englisherror, setenglisherror] = useState(false);
 
     function ChangeEnglish(value) {
+        console.log(testtext(value.target.value));
+        if (!testtext(value.target.value)) {
+            setloading(true);
+            setenglisherror(true);
+        } else {
+            setenglisherror(false);
+            setloading(false)
+        }
         setEnglish(value.target.value);
+    }
+
+    function testtext(value) {
+        const regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
+            regCn = /[¡¤£¡#£¤£¨¡ª¡ª£©£º£»¡°¡±¡®¡¢£¬|¡¶¡£¡·£¿¡¢¡¾¡¿[\]]/im;
+        if (regEn.test(value) || regCn.test(value)) {
+            return false;
+        } else {
+            return true
+        }
     }
 
     function Changelanguage(value, type) {
@@ -130,6 +149,8 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
         setloading(true);
         if (projectId === null) {
             setnullable(true);
+            return
+        } else if (englisherror) {
             return
         } else {
             setnullable(false)
@@ -260,22 +281,24 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
                                 value={English}
                             />
                         </FormControl>
-                          {loading ?
+                        {loading ?
                             <div className="svgloading">
-                                <svg x="0px" y="0px"
-                                     viewBox="0 0 100 100" enableBackground="new 0 0 0 0" xmlSpace="preserve">
-                                    <path fill="black"
-                                          d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
-                                      <animateTransform
-                                          attributeName="transform"
-                                          attributeType="XML"
-                                          type="rotate"
-                                          dur="1s"
-                                          from="0 50 50"
-                                          to="360 50 50"
-                                          repeatCount="indefinite"/>
-                                  </path>
-                                </svg>
+                                {!englisherror ?
+                                    <svg x="0px" y="0px"
+                                         viewBox="0 0 100 100" enableBackground="new 0 0 0 0" xmlSpace="preserve">
+                                        <path fill="black"
+                                              d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                                            <animateTransform
+                                                attributeName="transform"
+                                                attributeType="XML"
+                                                type="rotate"
+                                                dur="1s"
+                                                from="0 50 50"
+                                                to="360 50 50"
+                                                repeatCount="indefinite"/>
+                                        </path>
+                                    </svg> :
+                                    <div className="errformat"><img alt="" src={require("./image/error.png")}/></div>}
                             </div>
                             : null}
                     </div>

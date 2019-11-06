@@ -13,3 +13,10 @@
     left: 101%;
     top: 30%;
 }
+.errformat{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 10%;
+    top: 15%;
+}
