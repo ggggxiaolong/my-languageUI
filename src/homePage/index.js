@@ -288,9 +288,7 @@ class Homepage extends Component {
             this.setState({ifMore: false})
         }
         let old_result_message = this.state.result_message;
-        // console.log({result_message: {...old_result_message, [this.state.page]:reponse.data.language}});
         let newlist = [...old_result_message, reponse.data.language];
-        // newlist.map(item => item.map(item => console.log(item.en)));
         this.setState({result_message: newlist, page: this.state.page + 1})
     }
 
