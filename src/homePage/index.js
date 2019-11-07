@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import cookie from 'react-cookies'
-import {BrowserRouter as Router, Redirect,withRouter} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect, withRouter} from 'react-router-dom'
 import './homePage.css'
 import ApolloClient from 'apollo-boost'
 import {gql} from 'apollo-boost'
@@ -54,9 +54,9 @@ class Homepage extends Component {
         this.state = {
             project_select: 1,
             result: null,
-            error: null,
+            // error: null,
             iflogin_forward: false,
-            language_type: ['','all','en','es','ja','cs','fr','sk','ko'],
+            language_type: ['', 'all', 'en', 'es', 'ja', 'cs', 'fr', 'sk', 'ko'],
             result_message: null,
             page: 0,
             languageinclude: null,
@@ -70,6 +70,7 @@ class Homepage extends Component {
             editwindow: false,
             id: null,
             addlanguage: false,
+            finallerror: null,
             // result_message_error:null,
         };
         this.projectselect = this.projectselect.bind(this);
@@ -85,6 +86,9 @@ class Homepage extends Component {
         this.editon = this.editon.bind(this);
         this.ifreponsesuccess = this.ifreponsesuccess.bind(this);
         this.addlanguage = this.addlanguage.bind(this);
+        this.setfinallerror = this.setfinallerror.bind(this);
+        this.refreceToken = this.refreceToken.bind(this);
+
     }
 
     changejectselect(event) {
@@ -167,7 +171,7 @@ class Homepage extends Component {
                        }`
         })
             .then(reponse => this.setState({result: reponse.data.projects}))
-            .catch(error => this.setState({error: error.message}))
+            .catch(error => this.refreceToken(this.projectselect, error))
     }
 
     setloginforward() {
@@ -243,7 +247,7 @@ class Homepage extends Component {
                 result_message: [reponse.data.language],
                 ifMore: reponse.data.language.length === 25
             }))
-            .catch(error => this.setState({error: error.message}))
+            .catch(error => this.refreceToken(this.submitSearch, error))
         // const content = this.state.result_message;
     }
 
@@ -276,7 +280,7 @@ class Homepage extends Component {
                         }`
         })
             .then(reponse => this.addresultmessage(reponse))
-            .catch(error => this.setState({error: error.message}))
+            .catch(error => this.refreceToken(this.LetMore, error))
     }
 
     addresultmessage(reponse) {
@@ -298,7 +302,7 @@ class Homepage extends Component {
 
     changeSearch(search) {
         search = search.target.value;
-        search = search.replace('\\','\\\\');
+        search = search.replace('\\', '\\\\');
         if (search === '') {
             this.setState({search: null})
         } else {
@@ -340,7 +344,7 @@ class Homepage extends Component {
             }`
         })
             .then(reponse => this.ifreponsesuccess(reponse))
-            .catch(error => this.setState({error: error.message}));
+            .catch(error => this.refreceToken(this.submit, error));
 
         contentold[0].new_en = contentnew[0].new_en;
         contentold[0].new_es = contentnew[0].new_es;
@@ -370,12 +374,46 @@ class Homepage extends Component {
             this.setState({addlanguage: true})
         }
     }
+
+    setfinallerror(result, error, action) {
+        if (error) {
+            this.setState({
+                finallerror: error.message
+            })
+        }
+        if (result) {
+            cookie.remove('tokenaccessToken');
+            cookie.remove('refreshToken');
+            cookie.save('tokenaccessToken', result.data.refreshToken.accessToken);
+            cookie.save('refreshToken', result.data.refreshToken.refreshToken);
+            action()
+        }
+    }
+
+    refreceToken(action, error) {
+        if (error && error.message.slice(15, 29) === 'you must login') {
+            const client = new ApolloClient({
+                uri: 'http://192.168.1.112:4000/graphql',
+            });
+            client.query({
+                query: gql`
+            {
+            refreshToken(token:"${cookie.load('refreshToken')}"){
+            accessToken
+            refreshToken
+            }}
+            `
+            })
+                .then(result => this.setfinallerror(result, false, action))
+                .catch(error => this.setfinallerror(false, error, action))
+        }
+    }
+
     render() {
-        const seterror = (error) => this.setState({error: error.message});
         return (
-            this.state.error !== null
+            this.state.finallerror !== null
                 ?
-                this.state.error.slice(15, 29) === 'you must login'
+                this.state.finallerror.slice(15, 32) === 'refres token fail'
                     ?
                     !this.state.iflogin_forward
                         ?
@@ -383,7 +421,7 @@ class Homepage extends Component {
                                      title='Login timeout'
                                      content='Login has expired, please login again .' fun={this.setloginforward}/>
                         : <Router><Redirect to="/login"/></Router>
-                    : alert(this.state.error)
+                    : alert(this.state.finallerror)
                 : <div className='homepage'>
                     <div className='homepagetitle'>
                         <div className='homepagetitle_change'>
@@ -627,11 +665,13 @@ class Homepage extends Component {
                                     submit={this.submit}
                                     content={this.state.result_message} id={this.state.id}/> : null}
                     {this.state.addlanguage ?
-                        <AddLanguage projectfrom={this.state.project_select} fun={this.addlanguage} title='Add Language' top={this.state.scrollY}
-                                     gologin={this.setloginforward} seterror={seterror}/> : null
+                        <AddLanguage projectfrom={this.state.project_select} fun={this.addlanguage} title='Add Language'
+                                     top={this.state.scrollY}
+                                     gologin={this.setloginforward} seterror={this.refreceToken}/> : null
                     }
                 </div>
         )
     }
 }
+
 export default withRouter(Homepage)

@@ -141,7 +141,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
             `
         })
             .then(result => finallResult(result))
-            .catch(error => seterror(error));
+            .catch(error => seterror(EnglishSubmit,error));
     }
 
     function EnglishOK() {
@@ -171,7 +171,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
             `
         })
             .then(result => settoSubmitResult(result))
-            .catch(error => seterror(error));
+            .catch(error => seterror(EnglishOK,error));
     }
 
     return (

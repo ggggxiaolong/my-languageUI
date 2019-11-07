@@ -59,33 +59,33 @@ function Loginresult({className, loginsuccess, loginfail, loginsuccess_statu, lo
         return <Router>
             <Redirect to="/homePage"/>
         </Router>;
-}
+    }
 
-if (loginsuccess) {
-    cookie.save('tokenaccessToken', loginsuccess.data.login.accessToken);
-    cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
-    return (
-        <div className='loginresult_suc'>
-            <span className="myicon-tick-checked"/>
-            <span className="locat_s">
+    if (loginsuccess) {
+        cookie.save('tokenaccessToken', loginsuccess.data.login.accessToken);
+        cookie.save('refreshToken', loginsuccess.data.login.refreshToken);
+        return (
+            <div className='loginresult_suc'>
+                <span className="myicon-tick-checked"/>
+                <span className="locat_s">
                 Login in {loginsuccess_time} seconds ...
                 </span>
-        </div>)
+            </div>)
 
-} else if (loginfail) {
-    return (
-        <div className='loginresult_fail'>
-            <div className="loginstatuicon">
-                <div className="myicon-tick-worring"/>
-            </div>
-            <span className="locat">
+    } else if (loginfail) {
+        return (
+            <div className='loginresult_fail'>
+                <div className="loginstatuicon">
+                    <div className="myicon-tick-worring"/>
+                </div>
+                <span className="locat">
                 Wrong account or password
                 </span>
-        </div>
-    )
-} else {
-    return <label/>;
-}
+            </div>
+        )
+    } else {
+        return <label/>;
+    }
 }
 
 function Login() {
@@ -138,65 +138,65 @@ function Login() {
 
     return (
         <div>
-        <div className="loginstatu">
-            <Loginresult loginsuccess={result} loginfail={error}
-                         loginsuccess_statu={loginsuccess_statu}
-                         loginsuccess_time={loginsuccess_time} referce={seterror}/>
-        </div>
-        <div onKeyUp={(e) => onKeyup(e)} className='bigdiv'>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline/>
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <TextField variant="outlined"
-                               margin="normal"
-                               required
-                               fullWidth
-                               id="username"
-                               label="Username"
-                               name="Username"
-                               autoFocus
-                               onChange={(event) => changeusername('user', event)}
-                               placeholder='Username'/>
-                    <TextField variant="outlined"
-                               margin="normal"
-                               required
-                               fullWidth
-                               id="password"
-                               label="Password"
-                               name="Password"
-                               autoFocus
-                               onChange={(event) => changeusername('pwd', event)}
-                               placeholder='Password'
-                    />
-                    {/*<FormControlLabel*/}
-                    {/*control={<Checkbox value="remember" color="primary"/>}*/}
-                    {/*label="Remember me"*/}
-                    {/*/>*/}
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={() => loginsubmit()}>Sign In</Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
+            <div className="loginstatu">
+                <Loginresult loginsuccess={result} loginfail={error}
+                             loginsuccess_statu={loginsuccess_statu}
+                             loginsuccess_time={loginsuccess_time} referce={seterror}/>
+            </div>
+            <div onKeyUp={(e) => onKeyup(e)} className='bigdiv'>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon/>
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
+                        <TextField variant="outlined"
+                                   margin="normal"
+                                   required
+                                   fullWidth
+                                   id="username"
+                                   label="Username"
+                                   name="Username"
+                                   autoFocus
+                                   onChange={(event) => changeusername('user', event)}
+                                   placeholder='Username'/>
+                        <TextField variant="outlined"
+                                   margin="normal"
+                                   required
+                                   fullWidth
+                                   id="password"
+                                   label="Password"
+                                   name="Password"
+                                   autoFocus
+                                   onChange={(event) => changeusername('pwd', event)}
+                                   placeholder='Password'
+                        />
+                        {/*<FormControlLabel*/}
+                        {/*control={<Checkbox value="remember" color="primary"/>}*/}
+                        {/*label="Remember me"*/}
+                        {/*/>*/}
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={() => loginsubmit()}>Sign In</Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                    Forgot password?
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </div>
-                <Box mt={8}>
-                    <Copyright/>
-                </Box>
-            </Container>
-        </div>
+                    </div>
+                    <Box mt={8}>
+                        <Copyright/>
+                    </Box>
+                </Container>
+            </div>
         </div>
     )
 }
