@@ -158,7 +158,7 @@ class Homepage extends Component {
 
     projectselect() {
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -229,7 +229,7 @@ class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -265,7 +265,7 @@ class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -321,7 +321,7 @@ class Homepage extends Component {
 
     submit = (contentold, contentnew) => {
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -393,7 +393,7 @@ class Homepage extends Component {
     refreceToken(action, error) {
         if (error && error.message.slice(15, 29) === 'you must login') {
             const client = new ApolloClient({
-                uri: 'http://localhost:4000/graphql',
+                uri: 'http://34.221.26.139:4000/graphql',
             });
             client.query({
                 query: gql`

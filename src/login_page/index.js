@@ -101,7 +101,7 @@ function Login() {
         setresult(null);
         seterror(null);
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
         });
         client.query({
             query: gql`

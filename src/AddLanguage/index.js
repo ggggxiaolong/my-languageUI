@@ -116,7 +116,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
 
     function EnglishSubmit() {
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -155,7 +155,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
             setnullable(false)
         }
         const client = new ApolloClient({
-            uri: 'http://localhost:4000/graphql',
+            uri: 'http://34.221.26.139:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
