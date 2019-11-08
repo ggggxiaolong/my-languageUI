@@ -72,7 +72,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
 
     function testtext(value) {
         const regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]]/im,
-            regCn = /[¡¤£¡#£¤£¨¡ª¡ª£©£º£»¡°¡±¡®¡¢£¬|¡¶¡£¡·£¿¡¢¡¾¡¿[\]]/im;
+            regCn = /[ï¿½ï¿½ï¿½ï¿½#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[\]]/im;
         if (regEn.test(value) || regCn.test(value)) {
             return false;
         } else {
@@ -116,7 +116,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
 
     function EnglishSubmit() {
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -155,7 +155,7 @@ export default function EditWindow({title, fun, projectfrom, seterror}) {
             setnullable(false)
         }
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),

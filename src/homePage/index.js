@@ -10,10 +10,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {styled} from '@material-ui/core/styles';
 import AddLanguage from '../AddLanguage'
+import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 // import {compose, spacing, palette} from '@material-ui/system';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import CometoTop from '../CometoTop'
+import { Icon } from '@material-ui/core'
 
 function removeByValue(arr, val) {
     for (var i = 0; i < arr.length; i++) {
@@ -156,7 +158,7 @@ class Homepage extends Component {
 
     projectselect() {
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -227,7 +229,7 @@ class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -263,7 +265,7 @@ class Homepage extends Component {
             }
         }
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -319,7 +321,7 @@ class Homepage extends Component {
 
     submit = (contentold, contentnew) => {
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
             headers: {
                 token: cookie.load('tokenaccessToken'),
                 refreshToken: cookie.load('refreshToken'),
@@ -391,7 +393,7 @@ class Homepage extends Component {
     refreceToken(action, error) {
         if (error && error.message.slice(15, 29) === 'you must login') {
             const client = new ApolloClient({
-                uri: 'http://192.168.1.112:4000/graphql',
+                uri: 'http://localhost:4000/graphql',
             });
             client.query({
                 query: gql`

@@ -101,7 +101,7 @@ function Login() {
         setresult(null);
         seterror(null);
         const client = new ApolloClient({
-            uri: 'http://192.168.1.112:4000/graphql',
+            uri: 'http://localhost:4000/graphql',
         });
         client.query({
             query: gql`
@@ -168,6 +168,7 @@ function Login() {
                                    required
                                    fullWidth
                                    id="password"
+                                   type="password"
                                    label="Password"
                                    name="Password"
                                    autoFocus
